@@ -1,0 +1,237 @@
+p{
+    font-family: Karla, serif;
+}
+
+form {
+    margin: 20px 0;
+    padding: 10px;
+}
+.error_message_forms {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.login-button{
+    position: fixed;
+    border-radius: 12px;
+    background-color: transparent;
+    color:#55AD9B;
+    display: block;
+    text-decoration: none; /* Remove underline from the link */
+    font-family: Karla, serif;
+    font-size: smaller;
+    float: right;
+    top:15px;
+    right:15px;
+    border: 0;
+    cursor: pointer;
+    font-weight: 800;
+    padding: 6px 7px;
+    text-align: center;
+    width: 100px;
+    transition: filter 3ms, box-shadow 3ms;
+
+}
+.login-button:hover{
+    filter: brightness(1.05);
+}
+.login-button:active{
+    filter: brightness(1.1);
+}
+
+
+.form__button{
+    display: flex;
+    flex:1;
+    max-width: 300px;
+    text-align: center;
+    justify-content: center;
+    background-color: rgb(83, 166, 149);
+    color: white;
+    border: none;
+    border-radius: 18px;
+    float: right;
+    padding: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: filter 3ms, box-shadow 3ms;
+    font-size: medium;
+    text-decoration: none; /* Remove underline from the link */
+    font-family: Karla, serif;
+}
+.form__button:hover{
+    filter: brightness(1.05);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+
+}
+
+.form__button:active{
+    filter: brightness(1.1);
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+
+}
+
+
+.form__button--begin_button{
+    width:50%;
+    max-width: 200px;
+    padding: 10px;
+    align-content: center;
+    align-items: center;
+    margin-left: 100px;
+    margin-right: 100px;
+
+}
+
+.main-container{
+    background-color: rgb(241, 248, 232);
+    box-shadow: 0 0 20px rgba(83, 166, 149, 0.25);
+    border-radius: 20px;
+    margin: auto;
+    margin-top: 200px;
+    padding: 50px 30px;
+    max-width: 700px;
+    width: 80%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.buttons-container-welcome {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.welcome-text{
+    font-weight: bold;
+}
+
+
+.name-form, .goals-form, .activity-form, .profile-form{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.name-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.name-form-control {
+    width: 60%;
+    margin-bottom: 60px;
+    padding: 10px;
+    font-family: Karla, serif;
+    font-size: small;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.goals-container, .activity-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.goals-container label, .activity-container label{
+    display: none;
+}
+
+.goals-form-control input[type="radio"], .activity-form-control input[type="radio"]{ /* hide the radio circle thingy*/
+    display: none;
+}
+
+.goals-form-control label, .activity-form-control label{ /* labels are the gaol texts y*/
+    font-family: Karla, serif;
+    display: block;
+    padding: 10px;
+    width: 350px;
+    margin: 5px;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: border 0.8s, box-shadow 0.8s, font-weight 0.8s;
+}
+
+.goals-form-control input[type="radio"]:checked+label, .activity-form-control input[type="radio"]:checked + label {
+    border: 2px #9a9999;
+    font-weight: 500;
+    box-shadow: 0 0 20px rgba(50,50,50, 0.85);
+}
+
+.sex-form-control input[type="radio"]{ /* hide the radio circle thingy*/
+    display: none;
+}
+
+.sex-form-control label {
+    font-family: Karla, serif;
+    display: block;
+    padding: 5px;
+    width: 100px;
+    margin: 5px;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.8s, box-shadow 0.8s, font-weight 0.8s;
+}
+
+.sex-form-control input[type="radio"]:checked+label{
+    font-weight: 500;
+    box-shadow: 0 0 20px rgba(50, 50, 50, 0.85);
+    border-color: #9a9999; /* Change the border color for selected */
+}
+
+
+.text-profile{
+    display: flex;
+    width: 60%;
+    align-items: center;
+}
+
+.sex-container{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+
+}
+
+.age-h-w-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+    margin-bottom: 50px;
+
+
+}
+
+.profile-form-control {
+    width: 40%;
+    height: 40px;
+    padding: 10px;
+    font-family: Karla, serif;
+    font-size: small;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+}

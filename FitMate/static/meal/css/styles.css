@@ -1,0 +1,278 @@
+.search-form{
+    margin: 50px 50px;
+}
+.search-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #a1baa1;
+    gap:0;
+}
+
+
+.search-box{
+    display: flex;
+    flex:1
+}
+.search-icon-div{
+    display: flex;
+    flex: 1;
+}
+.search-icon-button{
+    border: none;
+    background-color: transparent;
+}
+.date-navigation-box{
+    display: flex;
+
+}
+.add-food-date-section{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+
+    width: 100%;
+
+    box-shadow: 0 0 4px rgba(100, 100, 100, 0.25);
+    background-color: rgba(204, 204, 190, 0.24);
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    margin-bottom: 0;
+    justify-content: end;
+    margin-right: 40px;
+    gap: 40px;
+
+}
+
+.date-navigation-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+.nav-button{
+    color: black;
+    font-size: large;
+    text-decoration: none;
+    font-weight: 300;
+}
+
+
+.add-food-button{
+    background-color: #a1baa1;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    width: 120px;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 12px;
+    transition: filter 0.1s;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: medium;
+}
+
+.add-food-button:hover{
+    filter: brightness(1.05);
+}
+
+.add-food-button:active{
+    filter: brightness(1.1);
+}
+.main-meal-section{
+    margin: 80px 20px;
+    display: flex;
+}
+.meal-section{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+
+}
+.stats-section{
+    display: flex;
+    width: 40%;
+
+}
+
+.meal-time{
+    font-size: large;
+    font-weight: bold;
+    border-top: 1px solid black;
+    padding: 10px;
+    margin-top: 10px;
+    color: #7ea086;
+}
+
+.food-item{
+    margin-left: 10px;
+
+}
+
+.food-item-name-quantity{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.food-item-name{
+    font-weight: bold;
+    display: flex;
+    text-decoration: none;
+    flex: 1;
+}
+.food-item-name a{
+    color: black;
+    text-decoration: none;
+
+}
+.food-item-calories{
+    font-weight: bold;
+    display: flex;
+    flex: 1;
+}
+
+.stats-section{
+    margin-left: 50px;
+}
+.stat-box{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(204, 204, 190, 0.34);
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    margin-top: 0;
+    align-items: center;
+    width: 80px;
+    height: 140px;
+    padding: 15px;
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+
+}
+.eaten-stat{
+    display: flex;
+    font-weight: bold;
+    font-size: x-large;
+    margin: 10px;
+}
+.total-stat{
+    display: flex;
+    text-align: center;
+    font-size: small;
+}
+.stat-title{
+    display: flex;
+    color: rgba(0, 0, 0, 0.12);
+    margin-top: 0;
+
+}
+
+.edit-back-section{
+    display: flex;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.edit-btn, .back-btn, .delete-btn{
+    display: flex;
+    background-color: #a1baa1;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    width: 70px;
+    padding: 5px 30px;
+    margin-right: 20px;
+    border-radius: 12px;
+    transition: filter 0.1s;
+    text-align: center;
+    text-decoration: none;
+    justify-content: center;
+    color: white;
+    font-size: medium;
+}
+
+.edit-btn:hover, .back-btn:hover, .delete-btn:hover{
+    filter: brightness(1.05);
+}
+
+.edit-btn:active, .back-btn:active, .delete-btn:active{
+    filter: brightness(1.1);
+}
+
+.entry-title{
+    font-size: xx-large;
+    font-weight: bold;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.meal-title-and-stats{
+    margin: 40px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-information-table{
+    border-collapse: collapse;
+    margin: auto;
+
+
+}
+.entry-information-table th,
+.entry-information-table td {
+    font-size: small;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 50%;
+    margin: auto;
+    margin-top:30px;
+
+}
+
+.form-content{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-label{
+    font-size: medium;
+
+}
+
+
+.form-button button{
+    background-color: #a1baa1;
+    font-size: medium;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    padding: 5px 30px;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    margin-top: 20px;
+    transition: filter 0.1s;
+}
+
+.form-button:hover{
+    filter: brightness(1.05);
+}
+
+.form-button:active{
+    filter: brightness(1.1);
+}
+
+
+
+
+
+
+
+

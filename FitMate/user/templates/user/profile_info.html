@@ -1,0 +1,36 @@
+<div class="main-container">
+                    <div class="text-profile">
+                        <p>We just need a little more info to create the best diet plan for you.</p>
+                    </div>
+                    <div class="profile-form">
+                        <p style="text-align: center;">Choose your biological sex:</p>
+                        <div class="sex-container">
+                            {% for choice in profile_form.sex %}
+                                <div class="sex-form-control">
+                                    {{ choice.tag }} <label
+                                        for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                            <div id="sex_error" class="error" style="display:none;"></div>
+                        </div>
+                        <div class="age-h-w-container">
+                            {{ profile_form.age }}
+                            <div id="age_error" class="error" style="display:none;"></div>
+                            {{ profile_form.height }}
+                            <div id="height_error" class="error" style="display:none;"></div>
+                            {{ profile_form.weight }}
+                            <div id="weight_error" class="error" style="display:none;"></div>
+                            {{ profile_form.goal_weight }}
+                            <div id="goal_weight_error" class="error" style="display:none;"></div>
+                        </div>
+
+                        <div class="buttons-container">
+                            <button type="button" class="form__button" onclick="showPrevSection()">
+                                Back
+                            </button>
+                            <button type="button" class="form__button" onclick="showNextSection()">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>

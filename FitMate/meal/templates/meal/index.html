@@ -1,0 +1,167 @@
+{% extends 'core/meals.html' %}
+
+{% block main_content %}
+    <head>
+        <title>Meals</title>
+    </head>
+    <div class="add-food-date-section">
+        <div class="date-navigation-box">
+            {% if next_date is None %}
+                <a href="?date={{ prev_date }}" class="nav-button">&lt;</a>
+                <span style="margin-right: 40px;">Today</span>
+           {% else %}
+                <a href="?date={{ prev_date }}" class="nav-button">&lt;</a>
+                <span>{{ date }}</span>
+                <a href="?date={{ next_date }}" class="nav-button">&gt;</a>
+            {% endif %}
+
+
+        </div>
+        <a href="{% url 'meal:search' %}?date={{ date|date:"Y-m-d" }}" class="add-food-button">Add Food</a>
+    </div>
+
+
+    <div class="main-meal-section">
+        <div class="meal-section">
+            {% if message %}
+                <p>{{ message }}</p>
+            {% else %}
+                <div class="meal-time">
+                    Breakfast
+                </div>
+                {% for food in food_entries %}
+                    {% if food.meal_time == 'breakfast' %}
+                        <div class="food-item">
+                            <div class="food-item-name-quantity">
+                                <div class="food-item-name">
+                                    <a href="{% url "meal:detail" food.pk %}"> {{ food.food_name }}</a>
+                                </div>
+                                <div class="food-item-calories">
+                                    {{ food.quantity }} x {{ food.serving_description }}
+                                    &#183; {{ food.total_calories }} cals
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="meal-time">
+                    Lunch
+                </div>
+                {% for food in food_entries %}
+                    {% if food.meal_time == 'lunch' %}
+                        <div class="food-item">
+                            <div class="food-item-name-quantity">
+                                <div class="food-item-name">
+                                    <a href="{% url "meal:detail" food.pk %}"> {{ food.food_name }}</a>
+                                </div>
+                                <div class="food-item-calories">
+                                    {{ food.quantity }} x {{ food.serving_description }}
+                                    &#183; {{ food.total_calories }} cals
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="meal-time">
+                    Dinner
+                </div>
+                {% for food in food_entries %}
+                    {% if food.meal_time == 'dinner' %}
+                        <div class="food-item">
+                            <div class="food-item-name-quantity">
+                                <div class="food-item-name">
+                                    <a href="{% url "meal:detail" food.pk %}"> {{ food.food_name }}</a>
+                                </div>
+                                <div class="food-item-calories">
+                                    {{ food.quantity }} x {{ food.serving_description }}
+                                    &#183; {{ food.total_calories }} cals
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="meal-time">
+                    Snacks
+                </div>
+                {% for food in food_entries %}
+                    {% if food.meal_time == 'snack' %}
+                        <div class="food-item">
+                            <div class="food-item-name-quantity">
+                                <div class="food-item-name">
+                                    <a href="{% url "meal:detail" food.pk %}"> {{ food.food_name }}</a>
+                                </div>
+                                <div class="food-item-calories">
+                                    {{ food.quantity }} x {{ food.serving_description }}
+                                    &#183; {{ food.total_calories }} cals
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="stats-section">
+            {% if message %}
+                <p>No stats available for this day.</p>
+            {% else %}
+
+
+                <div class="stat-box">
+                    <span class="stat-title">calories</span>
+                    <span class="eaten-stat">
+                        {{ daily_stats.total_daily_calories }}
+                    </span>
+                    <span class="total-stat">
+                        of
+                    </span>
+                    <span class="total-stat">
+                        {{ total_calories }} cals
+                    </span>
+
+                </div>
+                <div class="stat-box">
+                    <span class="stat-title">carbs</span>
+                    <span class="eaten-stat">
+                        {{ daily_stats.total_daily_carbs }}
+                    </span>
+                    <span class="total-stat">
+                        of
+                    </span>
+                    <span class="total-stat">
+                        {{ carb_g }}g
+                    </span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-title">protein</span>
+                    <span class="eaten-stat">
+                        {{ daily_stats.total_daily_proteins }}
+                    </span>
+                    <span class="total-stat">
+                        of
+                    </span>
+                    <span class="total-stat">
+                        {{ protein_g }}g
+                    </span>
+
+                </div>
+                <div class="stat-box">
+                    <span class="stat-title">fat</span>
+                    <span class="eaten-stat">
+                        {{ daily_stats.total_daily_fats }}
+                    </span>
+                    <span class="total-stat">
+                        of
+                    </span>
+                    <span class="total-stat">
+                        {{ fat_g }}g
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

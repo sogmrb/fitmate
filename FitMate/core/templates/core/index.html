@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{% endblock %}
+{% block content %}
+
+    {% load static %}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+        <title>Index</title>
+    </head>
+
+    <div class="navbar">
+        <div class="top">
+            <div class="fitmate">Fitmate!</div>
+            <div class="spacer"></div>
+            <div class="right-section">
+                <a class="logout-button"href="{% url "user:my_logout" %}">LOG OUT</a>
+            </div>
+
+        </div>
+        <div class="bottom">
+            <div class="sections">
+                <a class="sections-item"href="{% url "core:dashboard" %}">Dashboard</a>
+                 <a class="sections-item"href="{% url "meals:index" %}">Meals</a>
+                 <a class="sections-item"href="{% url "exercise:index" %}">Exercises</a>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

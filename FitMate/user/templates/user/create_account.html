@@ -1,0 +1,18 @@
+<div class="main-container">
+                    {{ account_form.non_field_errors }}
+                    {% for field in account_form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {{ field.errors }}
+                        </div>
+                    {% endfor %}
+
+                    <div class="buttons-container">
+                        <a type="button" class="form__button" onclick="showPrevSection()">
+                            Back
+                        </a>
+                        <button type="submit" class="form__button">Sign Up</button>
+                    </div>
+                </div>

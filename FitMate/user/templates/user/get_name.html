@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'user/css/styles.css' %}">
+
+    <div>
+        <a class="login-button" href="{% url "user:my_login" %}">LOG IN</a>
+    </div>
+    <div class="form-container">
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <!-- get name section -->
+            <div class="main-container">
+                <div>
+                    <p>What should we call you?</p>
+                </div>
+                <div class="name-form">
+                    <div class="name-box">
+                        {{ profile_form.name }}
+                    </div>
+
+                    <div class="buttons-container">
+                        <a type="button" class="form_button"
+                           href="{% url "user:welcome" %}">
+                            Back
+                        </a>
+                        <button type="submit" class="form_button">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

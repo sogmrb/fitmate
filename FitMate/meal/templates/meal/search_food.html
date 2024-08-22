@@ -1,0 +1,25 @@
+{% extends 'core/meals.html' %}
+
+{% block title %}Search Food{% endblock %}
+
+{% block main_content %}
+    <head>
+        <title>Search Food</title>
+    </head>
+    <div class="search-form">
+        <form method="GET" action=".">
+            <div class="search-section">
+                <div class="search-box">
+                    {% csrf_token %}
+                    {{ form.query }}
+                    <input type="hidden" name="date" value="{{ request.GET.date }}">
+                </div>
+                <div class="search-icon-div">
+                    <button class="search-icon-button" type="submit">&#128269;</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

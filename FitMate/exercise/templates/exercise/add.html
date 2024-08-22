@@ -1,0 +1,22 @@
+{% extends 'core/exercises.html' %}
+
+{% block title %}Add Exercise{% endblock %}
+
+{% block main_content %}
+    {% load static %}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
+        <title>Add Exercise</title>
+    </head>
+    <div class="form-container">
+        <form method="POST" action="?date={{ date }}">
+            {% csrf_token %}
+            <div class="form-content">
+                {{ form.as_p }}
+            </div>
+            <div class="form-button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

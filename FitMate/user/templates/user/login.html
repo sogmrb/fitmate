@@ -1,0 +1,22 @@
+ {% extends 'core/base.html' %}
+
+{% block title %}{% endblock %}
+{% block content %}
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'user/css/styles.css' %}">
+
+    <div>
+        <a class="login-button" href="{% url "user:welcome" %}">SIGN UP</a>
+    </div>
+    <div class="main-container">
+
+        <form class="form-with-validation" method="post" action="{% url 'user:my_login' %}">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="begin-button">LOG IN</button>
+        </form>
+    </div>
+{% endblock %}

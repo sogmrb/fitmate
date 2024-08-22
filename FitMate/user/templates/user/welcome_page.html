@@ -1,0 +1,182 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'user/css/styles.css' %}">
+
+    <div>
+        <a class="login-button" href="{% url "user:my_login" %}">LOG IN</a>
+    </div>
+    <div class="form-container">
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <!-- welcome section -->
+            <section class="welcome__page welcome__page--welcome welcome__page--active">
+                <div class="main-container">
+                    <div>
+                        <p class="welcome-text">WELCOME TO FITMATE</p>
+                    </div>
+                    <div class="buttons-container-welcome">
+                        <button type="button" class="form__button form__button--begin_button" onclick="showNextSection()">
+                            BEGIN
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- get name section -->
+            <section class="welcome__page welcome__page--get_name" style="display: none;">
+                <div class="main-container">
+                    <div>
+                        <p>What should we call you?</p>
+                    </div>
+                    <div class="name-form">
+                        <div class="name-box">
+                            {{ profile_form.name }}
+
+                        </div>
+
+                        <div class="buttons-container">
+                            <button type="button" class="form__button" onclick="showPrevSection()">
+                                Back
+                            </button>
+                            <button type="button" class="form__button" onclick="showNextSection()">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- goals section -->
+            <section class="welcome__page welcome__page--goals" style="display: none;">
+                <div class="main-container">
+                    <div>
+                        <p>What is your main goal?</p>
+                    </div>
+                    <div class="goals-form">
+                        <div class="goals-container">
+                            {% for choice in profile_form.goal %}
+                                <div class="goals-form-control">
+                                    {{ choice.tag }} <label
+                                        for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="buttons-container">
+                            <button type="button" class="form__button"
+                                    onclick="showPrevSection()">Back
+                            </button>
+                            <button type="button" class="form__button" onclick="showNextSection()">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- activity level section -->
+            <section class="welcome__page welcome__page--activity_level" style="display: none;">
+                <div class="main-container">
+                    <div>
+                        <p>Tell us your activity level.</p>
+                    </div>
+                    <div class="activity-form">
+                        <div class="activity-container">
+                            {% for choice in profile_form.activity_level %}
+                                <div class="activity-form-control">
+                                    {{ choice.tag }} <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="buttons-container">
+                            <button type="button" class="form__button"
+                                    onclick="showPrevSection()">Back
+                            </button>
+                            <button type="button" class="form__button" onclick="showNextSection()">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- physical/profile info section -->
+            <section class="welcome__page welcome__page--profile_info" style="display: none;">
+                <div class="main-container">
+                    <div class="text-profile">
+                        <p>We just need a little more info to create the best diet plan for you.</p>
+                    </div>
+                    <div class="profile-form">
+                        <p style="text-align: center;">Choose your biological sex:</p>
+                        <div class="sex-container">
+                            {% for choice in profile_form.sex %}
+                                <div class="sex-form-control">
+                                    {{ choice.tag }} <label
+                                        for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="age-h-w-container">
+                            {{ profile_form.age }}
+                            {{ profile_form.height }}
+                            {{ profile_form.weight }}
+                            {{ profile_form.goal_weight }}
+                        </div>
+
+                        <div class="buttons-container">
+                            <button type="button" class="form__button" onclick="showPrevSection()">
+                                Back
+                            </button>
+                            <button type="button" class="form__button" onclick="showNextSection()">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- sign up section -->
+            <section class="welcome__page welcome__page--create_account welcome__page--active" style="display: none;">
+                <div class="main-container">
+                    {{ account_form.non_field_errors }}
+                    {% for field in account_form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {{ field.errors }}
+                        </div>
+                    {% endfor %}
+
+                    <div class="buttons-container">
+                        <button type="button" class="form__button" onclick="showPrevSection()">
+                            Back
+                        </button>
+                        <button type="submit" class="form__button">Sign Up</button>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+
+    <script>
+        let sectionIdx = 0;
+        const sections = document.querySelectorAll('.welcome__page');
+        function showNextSection() {
+            sections[sectionIdx].style.display = 'none';
+            sectionIdx++;
+            sections[sectionIdx].style.display = 'block';
+
+
+        }
+        function showPrevSection() {
+            sections[sectionIdx].style.display = 'none';
+            sectionIdx--;
+            sections[sectionIdx].style.display = 'block';
+        }
+    </script>
+
+{% endblock %}

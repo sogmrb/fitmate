@@ -1,0 +1,19 @@
+{% extends 'core/meals.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block main_content %}
+    <head>
+        <title>Search Results</title>
+    </head>
+
+        <div class="search-results-section">
+            <p>Results</p>
+            {% for result in results %}
+                <div class="search-result-item">
+                    <a href="{% url "meal:add" result.id %}?date={{ request.GET.date }}"> {{ result.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+{% endblock %}

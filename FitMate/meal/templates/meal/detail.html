@@ -1,0 +1,126 @@
+{% extends 'core/meals.html' %}
+
+
+
+{% block main_content %}
+    {% load static %}
+    <head>
+        <title>Entry Details</title>
+    </head>
+    <div class="edit-back-section">
+        <div class="back-button">
+            <a href="{% url 'meal:index' %}" class="back-btn">Back</a>
+        </div>
+        <div class="edit-button">
+            <a href="{% url 'meal:edit' entry.pk %}" class="edit-btn">Edit</a>
+        </div>
+        <div class="edit-button">
+            <a href="{% url 'meal:delete' entry.pk %}" class="delete-btn">Delete</a>
+        </div>
+    </div>
+
+    <div class="meal-title-and-stats">
+        <div class="entry-title">
+            <p>{{ entry.food_name }}</p>
+        </div>
+        <table class="entry-information-table">
+            <tbody>
+            <tr>
+                <th class="entry-information-name">Date:</th>
+                <td class="entry-information-value">{{ entry.date }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Serving Size:</th>
+                <td class="entry-information-value">{{ entry.serving_description }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Quantity:</th>
+                <td class="entry-information-value">{{ entry.quantity }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Meal Time:</th>
+                <td class="entry-information-value">
+                    {% if entry.meal_time == 'breakfast' %}
+                        Breakfast
+                    {% elif entry.meal_time == 'lunch' %}
+                        Lunch
+                    {% elif entry.meal_time == 'dinner' %}
+                        Dinner
+                    {% else %}
+                        Snack
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Calories:</th>
+                <td class="entry-information-value">{{ entry.total_calories }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Carbs:</th>
+                <td class="entry-information-value">{{ entry.total_carbs }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Protein:</th>
+                <td class="entry-information-value">{{ entry.total_proteins }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Fat:</th>
+                <td class="entry-information-value">{{ entry.total_fats }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Saturated Fat:</th>
+                <td class="entry-information-value">{{ entry.total_saturated_fat }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Polyunsaturated Fat:</th>
+                <td class="entry-information-value">{{ entry.total_polyunsaturated_fat }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Monounsaturated Fat:</th>
+                <td class="entry-information-value">{{ entry.total_monounsaturated_fat }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Cholesterol:</th>
+                <td class="entry-information-value">{{ entry.total_cholesterol }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Sodium:</th>
+                <td class="entry-information-value">{{ entry.total_sodium }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Potassium:</th>
+                <td class="entry-information-value">{{ entry.total_potassium }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Fiber:</th>
+                <td class="entry-information-value">{{ entry.total_fibers }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Sugar:</th>
+                <td class="entry-information-value">{{ entry.total_sugar }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Calcium:</th>
+                <td class="entry-information-value">{{ entry.total_calcium }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Iron:</th>
+                <td class="entry-information-value">{{ entry.total_iron }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Vitamin A:</th>
+                <td class="entry-information-value">{{ entry.total_vitamin_a }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Vitamin C:</th>
+                <td class="entry-information-value">{{ entry.total_vitamin_c }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+{% endblock %}

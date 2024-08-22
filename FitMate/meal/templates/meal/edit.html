@@ -1,0 +1,23 @@
+{% extends 'core/meals.html' %}
+
+{% block title %}Edit entry{% endblock %}
+
+{% block main_content %}
+    <div class="form-container">
+        <div class="entry-title">
+            <p>{{ food_name }}</p>
+        </div>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <div class="form-content">
+                <span class="form-label">{{ form.quantity.label_tag }}</span> <span
+                    class="form-input">{{ form.quantity }}</span>
+                {{ form.meal_time.label_tag }} {{ form.meal_time }}
+                {{ form.serving.label_tag }} {{ form.serving }}
+            </div>
+            <div class="form-button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

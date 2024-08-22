@@ -1,0 +1,177 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{% endblock %}
+{% block content %}
+    {% load static %}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+        <title>Index</title>
+    </head>
+
+    <div class="navbar">
+        <div class="top">
+            <div class="fitmate">Fitmate!</div>
+            <div class="spacer"></div>
+            <div class="right-section">
+                <a class="logout-button" href="{% url "user:my_logout" %}">LOG OUT</a>
+            </div>
+
+        </div>
+        <div class="bottom">
+            <div class="sections">
+                <a class="sections-item sections-item-active" href="{% url "core:dashboard" %}">Dashboard</a>
+                <a class="sections-item" href="{% url "meal:index" %}">Meals</a>
+                <a class="sections-item" href="{% url "exercise:index" %}">Exercises</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="sections-item-dashboard">
+        <div class="personal-info-date">
+
+            <div class="personal-info">
+                <div class="profile-pic">
+                    <img src="woman-profile-cartoon.jpg" class="image-pfp" alt="">
+                </div>
+                <div class="name-w-h">
+                    <div class="name">
+                        <p> Hi, {{ profile.name }}. </p>
+                        <p style="font-weight:500; font-size: small">Here is your personal info:</p>
+                    </div>
+
+                    <div class="w-h-age">
+                        <p class="wha-text">Age: {{ profile.age }}yrs</p>
+                        <p class="wha-text">Weight: {{ profile.weight }}kg</p>
+                        <p class="wha-text">Height: {{ profile.height }}cm</p>
+
+                        {% if profile.goal == 'weight_loss' %}
+                            <p class="wha-text">Goal: Weight Loss</p>
+                        {% elif profile.goal == 'muscle_gain' %}
+                            <p class="wha-text">Goal: Muscle Gain</p>
+                        {% elif profile.goal == 'health' %}
+                            <p class="wha-text">Goal: Healthier Lifestyle</p>
+                        {% else %}
+                            <p class="wha-text">Goal: Manage Anxiety</p>
+                        {% endif %}
+
+                        {% if profile.activity_level == 'sedentary' %}
+                            <p class="wha-text">Activity Level: Sedentary</p>
+                        {% elif profile.activity_level == 'light' %}
+                            <p class="wha-text">Activity Level: Lightly active</p>
+                        {% elif profile.activity_level == 'moderate' %}
+                            <p class="wha-text">Activity Level: Moderately active</p>
+                        {% elif profile.activity_level == 'active' %}
+                            <p class="wha-text">Activity Level: Active</p>
+                        {% else %}
+                            <p class="wha-text">Activity Level: Very active</p>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="date-logs">
+                <div class="date-text">
+                    <span>Today, {{ date }}</span>
+
+                </div>
+                <div class="circle-progressions">
+                    <div class="eaten-calories">
+                        <div class="percentage">
+                            {{ percentage_eaten }}%
+                        </div>
+                        <div class="percentage-description">
+                            of daily intake consumed
+                        </div>
+
+                    </div>
+                    <div class="burned-calories">
+                        <div class="percentage">
+                            20%
+                        </div>
+                        <div class="percentage-description">
+                            of daily goal burned
+                        </div>
+                    </div>
+                    <div class="streak-days">
+
+                        <div class="percentage">
+                            {{ streak_day }}
+                        </div>
+                        <div class="percentage-description">
+                            day streak
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="bottom-section">
+            <div class="macro-add-section">
+                <div class="macro-info">
+
+                    <div class="macro-progress-bars">
+                        <span class="macro-goals-text">Macro goals</span>
+
+                        <div class="progress-row">
+                            <span class="stat-name">
+                                c
+                            </span>
+                            <div class="progress-container">
+
+                                <div class="progress-bar carb-bar" style="width: {{ carb_percentage }}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="progress-row">
+                            <span class="stat-name">
+                                p
+                            </span>
+                            <div class="progress-container">
+
+                                <div class="progress-bar protein-bar" style="width: {{ protein_percentage }}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="progress-row">
+                            <span class="stat-name">
+                                f
+                            </span>
+                            <div class="progress-container">
+
+                                <div class="progress-bar fat-bar" style="width: {{ fat_percentage }}%;"></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="add-log">
+                    <div class="add-exercise">
+                        <a href="{% url "exercise:add" %}" class="py-3 px-5 bg-sky-700 text-white">Add Exercise</a>
+                    </div>
+                    <div class="add-meal">
+                        <a href="{% url "meal:search" %}" class="py-3 px-5 bg-sky-700 text-white">Add Food</a>
+                    </div>
+                    <div class="log-weight">
+                        <span>Log weight</span>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="other">
+                <span>placeholder</span>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

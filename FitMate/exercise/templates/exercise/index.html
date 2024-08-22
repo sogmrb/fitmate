@@ -1,0 +1,62 @@
+{% extends 'core/exercises.html' %}
+
+{% block title %}Exercises{% endblock %}
+
+{% block main_content %}
+    <head>
+        <title>Exercises</title>
+    </head>
+    <div class="add-food-date-section">
+        <div class="date-navigation-box">
+            {% if next_date is None %}
+                <a href="?date={{ prev_date }}" class="nav-button">&lt;</a>
+                <span style="margin-right: 40px;">Today</span>
+            {% else %}
+                <a href="?date={{ prev_date }}" class="nav-button">&lt;</a>
+                <span>{{ date }}</span>
+                <a href="?date={{ next_date }}" class="nav-button">&gt;</a>
+            {% endif %}
+
+
+        </div>
+        <a href="{% url 'exercise:add' %}?date={{ date|date:"Y-m-d" }}" class="add-food-button">Add Exercise</a>
+    </div>
+
+    <div class="main-meal-section">
+        <div class="meal-section">
+            {% if message %}
+                <p>{{ message }}</p>
+            {% else %}
+                <div class="meal-time">
+                    Breakfast
+                </div>
+
+            {% endif %}
+        </div>
+        <div class="stats-section">
+            {% if message %}
+                <p>No stats available for this day.</p>
+            {% else %}
+
+
+                <div class="stat-box">
+                    <span class="stat-title">calories</span>
+                    <span class="eaten-stat">
+                        {{ daily_stats.total_daily_calories }}
+                    </span>
+                    <span class="total-stat">
+                        of
+                    </span>
+                    <span class="total-stat">
+                        1600 cals
+                    </span>
+
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+
+{% endblock %}

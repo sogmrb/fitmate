@@ -1,0 +1,332 @@
+p{
+    font-family: Karla, serif;
+    margin: 0;
+}
+div{
+    font-family: Karla, serif;
+}
+.navbar{
+    padding-top: 30px;
+    margin: 0 0;
+    background-color: rgb(168, 193, 167);
+    border-radius: 12px 12px 0 0;
+
+}
+.top{
+    display:grid;
+    grid-template-columns: 4fr 1fr 1fr;
+
+}
+
+.fitmate{
+    padding-left: 10px;
+    padding-bottom: 10px;
+    display: inline-block;
+    font-weight: bolder;
+    font-size: xx-large;
+    color: white;
+}
+
+.hi-name{
+    color: white;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.logout-button{
+    color: white;
+    text-decoration: none; /* Remove underline from the link */
+    font-family: Karla, serif;
+    font-size: smaller;
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 12px;
+    border: 0;
+    cursor: pointer;
+    font-weight: 800;
+    padding: 0 10px;
+    text-align: center;
+
+
+}
+
+.sections{
+    color: white;
+    display: flex;
+    width: 100%;
+    text-decoration: none;
+    justify-items: center;
+    align-items: center;
+    height: 40px;
+}
+
+.sections-item{
+    font-family: Karla, serif;
+    flex:1;
+    height: 100%;
+    padding-top: 10px;
+    border: none;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    background-color: #83a58a;
+    color: white;
+    border-radius: 15px 15px 0 0;
+    text-decoration: none;
+    align-items: center;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+.sections-item-active{
+    background-color: white;
+    color: #83a58a;
+}
+
+
+.sections-item-active a{
+    background-color: #83a58a;
+}
+.sections-item a{
+    color: white;
+    text-decoration: none;
+}
+
+
+.sections-item-dashboard{
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+    background-color: white;
+    height: 1000px;
+}
+
+.personal-info-date {
+    display: flex;
+    justify-content: space-between;
+    flex:1;
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    gap: 40px;
+}
+
+.personal-info {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(204, 204, 190, 0.34);
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0;
+    width: 400px;
+    justify-content: left;
+    padding: 20px;
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+
+}
+
+.name-w-h{
+    display: flex;
+    flex-direction: column;
+    margin-bottom : 10px;
+}
+
+.name{
+    color: blake;
+    font-weight: 700;
+    font-size: larger;
+    margin-left: 5px;
+    margin-bottom:20px;
+
+}
+.wha-text{
+    color: black;
+    font-size: small;
+    font-weight: 500;
+    flex: 1;
+    padding: 4px;
+    margin-left: 10px;
+}
+
+.w-h-age{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.date-logs {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(204, 204, 190, 0.34);
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0;
+    justify-content: left;
+    padding: 20px;
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+}
+
+.circle-progressions{
+    display: flex;
+    flex:5;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+
+}
+.eaten-calories, .burned-calories, .streak-days{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    width: 110px;
+    height: 110px;
+    flex:1;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 18px;
+
+}
+
+.percentage{
+    font-size: xx-large;
+    font-weight: bold;
+}
+.percentage-description{
+    margin-top: 10px;
+    font-size: x-small;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.date-text{
+    display: flex;
+    flex:1;
+    font-family: Karla, serif;
+    font-size: smaller;
+}
+
+.bottom-section{
+    margin-left: 30px;
+    margin-right: 50px;
+    display: flex;
+    flex:5;
+}
+.macro-add-section{
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    padding: 20px;
+    gap:10px;
+}
+.other{
+    display: flex;
+    flex:1;
+}
+
+.macro-info{
+    display: flex;
+    flex-direction: column;
+
+}
+.macro-progress-bars{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(204, 204, 190, 0.34);
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0;
+    width: 400px;
+    justify-content: left;
+    gap:10px;
+    padding: 20px;
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+}
+.macro-goals-text{
+    font-size: small;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.stat-name{
+    font-weight: 500;
+}
+.progress-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+
+}
+
+.progress-bar{
+    height: 10px;
+    align-self: start;
+}
+.carb-bar{
+    background-color: #7ea086;
+}
+.protein-bar{
+    background-color: #a07e7e;
+
+}
+.fat-bar{
+    background-color: #7e96a0;
+
+}
+
+.progress-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 30px;
+}
+
+
+
+.add-log{
+    display: flex;
+    gap:10px;
+
+    margin-top:20px;
+}
+.add-exercise, .add-meal{
+    background-color: #a1baa1;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    padding: 30px;
+    border-radius: 12px;
+    transition: filter 0.1s;
+}
+.add-exercise a, .add-meal a{
+    text-decoration: none;
+    color: white;
+    font-size: medium;
+}
+
+.add-exercise:hover, .add-meal:hover{
+    filter: brightness(1.05);
+}
+
+.add-exercise:active, .add-meal:active{
+    filter: brightness(1.1);
+}
+
+
+
+
