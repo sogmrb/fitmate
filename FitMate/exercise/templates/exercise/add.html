@@ -12,7 +12,27 @@
         <form method="POST" action="?date={{ date }}">
             {% csrf_token %}
             <div class="form-content">
-                {{ form.as_p }}
+                <div class="form-component">
+                    <label>{{ form.name.label_tag}}</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.category.label_tag }}</label>
+                    {{ form.category }}
+                </div>
+                <div class="form-component">
+                    <label for="{{ form.duration.id_for_label }}">Duration (minutes):</label>
+                    {{ form.duration }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.burned_calories.label_tag }}</label>
+                    {{ form.burned_calories }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.notes.label_tag }}</label>
+                    {{ form.notes }}
+                </div>
+
             </div>
             <div class="form-button">
                 <button type="submit">Submit</button>

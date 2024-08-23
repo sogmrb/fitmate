@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
@@ -8,18 +10,22 @@ from django.views import View
 from user.models import Profile
 from .forms import UserExerciseEntryForm
 from .models import UserExerciseEntry
-import ast
+from core.helper_functions import total_daily_burned
 
 
-def total_daily_stats(entries):
-    pass
+class IndexView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
 
-
-class IndexView(View):
     def get(self, request, *args, **kwargs):
         user = request.user
+        try:
+            profile = Profile.objects.get(user=user)
+        except Profile.DoesNotExist:
+            logout(request)
+            return redirect("user:my_login")
         selected_date = request.GET.get('date')
-        profile = get_object_or_404(Profile, user=request.user)
+
         name = profile.name
         if selected_date:
             date = timezone.datetime.strptime(selected_date, '%Y-%m-%d').date()
@@ -39,22 +45,24 @@ class IndexView(View):
         if not user_exercise_entries.exists():
             return render(request, "exercise/index.html",
                           {"message": "No entries for this day.", 'date': date, 'prev_date': prev_date,
-                           'next_date': next_date, 'name': name})
+                           'next_date': next_date, 'name': name, 'burned': 0})
 
-        daily_stats = total_daily_stats(user_exercise_entries)
-        print(daily_stats)
+        burned = total_daily_burned(user_exercise_entries)
         return render(request, "exercise/index.html",
                       {
                           "exercise_entries": user_exercise_entries,
                           'date': date,
                           'prev_date': prev_date,
                           'next_date': next_date,
-                          'daily_stats': daily_stats,
                           'name': name,
+                          'burned': burned
                       })
 
 
-class AddView(View):
+class AddView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, *args, **kwargs):
         date = request.GET.get('date')
         form = UserExerciseEntryForm()
@@ -76,18 +84,29 @@ class AddView(View):
         return render(request, "exercise/add.html", {"form": form, "date": date})
 
 
+class DetailView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
 
-class DetailView(View):
     pass
 
 
-class EditView(View):
+class EditView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     pass
 
 
-class DeleteView(View):
+class DeleteView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     pass
 
 
-class SearchView(View):
+class SearchView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     pass

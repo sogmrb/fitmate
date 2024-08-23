@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Profile(models.Model):
@@ -37,6 +38,11 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class WeightHistory(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    weight = models.IntegerField()
+    date_logged = models.DateField(default=timezone.now)
 
 
 

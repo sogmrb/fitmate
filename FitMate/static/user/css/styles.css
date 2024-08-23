@@ -6,10 +6,11 @@ form {
     margin: 20px 0;
     padding: 10px;
 }
-.error_message_forms {
+.form-error {
     color: red;
-    font-size: 0.9em;
+    font-size: small;
     margin-top: 5px;
+    width:40%;
 }
 
 .login-button{
@@ -18,7 +19,7 @@ form {
     background-color: transparent;
     color:#55AD9B;
     display: block;
-    text-decoration: none; /* Remove underline from the link */
+    text-decoration: none;
     font-family: Karla, serif;
     font-size: smaller;
     float: right;
@@ -157,7 +158,7 @@ form {
     display: none;
 }
 
-.goals-form-control label, .activity-form-control label{ /* labels are the gaol texts y*/
+.goals-form-control label, .activity-form-control label{ /* labels are the goal texts*/
     font-family: Karla, serif;
     display: block;
     padding: 10px;
@@ -201,6 +202,59 @@ form {
     border-color: #9a9999; /* Change the border color for selected */
 }
 
+.login-form-control label{
+    font-family: Karla, serif;
+    display: block;
+    padding: 5px;
+    width: 100px;
+    margin: 5px;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.login-form-control{
+    width: 100%;
+    height: 40px;
+    padding: 10px 30px;
+    font-family: Karla, serif;
+    font-size: small;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.login-form-button{
+    margin: auto;
+    margin-top:20px;
+    width: 60%;
+    text-align: center;
+    justify-content: center;
+    background-color: rgb(83, 166, 149);
+    color: white;
+    border: none;
+    border-radius: 18px;
+    float: right;
+    padding: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: filter 3ms, box-shadow 3ms;
+    font-size: medium;
+    text-decoration: none; /* Remove underline from the link */
+    font-family: Karla, serif;
+}
+
 
 .text-profile{
     display: flex;
@@ -234,4 +288,22 @@ form {
     border: 1px solid #ccc;
     border-radius: 15px;
     box-sizing: border-box;
+}
+
+.signup-form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.signup-form-field{
+    font-family: Karla, serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-help-text{
+    font-size: smaller;
+    color: rgba(133, 236, 236, 0.4);
+    width: 80%;
 }

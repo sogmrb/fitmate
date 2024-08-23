@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
@@ -12,11 +14,19 @@ from .models import UserFoodEntry
 import ast
 from core.helper_functions import carb_fat_protein_ratio, total_daily_stats
 
-class IndexView(View):
+
+class IndexView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, *args, **kwargs):
         user = request.user
+        try:
+            profile = Profile.objects.get(user=user)
+        except Profile.DoesNotExist:
+            logout(request)
+            return redirect("user:my_login")
         selected_date = request.GET.get('date')
-        profile = get_object_or_404(Profile, user=request.user)
         daily_needed_calories = profile.daily_needed_calories
         carb_in_gram, protein_in_gram, fat_in_gram = carb_fat_protein_ratio(daily_needed_calories, profile.goal,
                                                                             profile.activity_level)
@@ -60,7 +70,10 @@ class IndexView(View):
                       })
 
 
-class SearchView(View):
+class SearchView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, *args, **kwargs):
         form = FoodSearchForm(request.GET)
         if form.is_valid():
@@ -76,7 +89,10 @@ class SearchView(View):
         return render(request, 'meal/search_food.html', {'form': form})
 
 
-class AddView(View):
+class AddView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, food_id, *args, **kwargs):
         food_details = get_food_details(food_id)
         details = food_details.get('food', {})
@@ -166,13 +182,19 @@ class AddView(View):
             return redirect(url)
 
 
-class DetailView(View):
+class DetailView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, pk, *args, **kwargs):
         food_entry = get_object_or_404(UserFoodEntry, pk=pk)
         return render(request, "meal/detail.html", {"entry": food_entry})
 
 
-class EditView(View):
+class EditView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, pk, *args, **kwargs):
         food_entry = get_object_or_404(UserFoodEntry, pk=pk)
         form = UserFoodEntryForm(instance=food_entry)
@@ -189,7 +211,10 @@ class EditView(View):
             return redirect("meal:detail", pk=pk)
 
 
-class DeleteView(View):
+class DeleteView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, pk, *args, **kwargs):
         food_entry = get_object_or_404(UserFoodEntry, pk=pk)
         entry_date = food_entry.date.strftime('%Y-%m-%d')

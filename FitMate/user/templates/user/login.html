@@ -7,16 +7,34 @@
     <link rel="stylesheet" type="text/css" href="{% static 'user/css/styles.css' %}">
 
     <div>
-        <a class="login-button" href="{% url "user:welcome" %}">SIGN UP</a>
+        <a class="login-button" href="{% url "user:register" %}">SIGN UP</a>
     </div>
     <div class="main-container">
 
         <form class="form-with-validation" method="post" action="{% url 'user:my_login' %}">
             {% csrf_token %}
+            <div class="login-form">
 
-            {{ form.as_p }}
+                <div class="name-box">
+                    {{ form.username }}
+                </div>
 
-            <button class="begin-button">LOG IN</button>
+                <div class="name-box">
+                    {{ form.password }}
+                </div>
+
+                {% if form.non_field_errors %}
+                    <div class="form-error">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+             <div class="buttons-container">
+               <button class="login-form-button">LOG IN</button>
+            </div>
+
+            </div>
         </form>
     </div>
 {% endblock %}

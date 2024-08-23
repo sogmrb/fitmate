@@ -88,10 +88,10 @@
                     </div>
                     <div class="burned-calories">
                         <div class="percentage">
-                            20%
+                            {{ burned }}
                         </div>
                         <div class="percentage-description">
-                            of daily goal burned
+                            calories burned
                         </div>
                     </div>
                     <div class="streak-days">
@@ -127,6 +127,9 @@
 
                                 <div class="progress-bar carb-bar" style="width: {{ carb_percentage }}%;"></div>
                             </div>
+                            <span class="stat-name">
+                                {{ carb_percentage }}%
+                            </span>
                         </div>
 
                         <div class="progress-row">
@@ -137,6 +140,9 @@
 
                                 <div class="progress-bar protein-bar" style="width: {{ protein_percentage }}%;"></div>
                             </div>
+                            <span class="stat-name">
+                                {{ protein_percentage }}%
+                            </span>
                         </div>
 
                         <div class="progress-row">
@@ -147,6 +153,9 @@
 
                                 <div class="progress-bar fat-bar" style="width: {{ fat_percentage }}%;"></div>
                             </div>
+                            <span class="stat-name">
+                                {{ fat_percentage }}%
+                            </span>
                         </div>
 
 
@@ -155,20 +164,31 @@
                 </div>
                 <div class="add-log">
                     <div class="add-exercise">
-                        <a href="{% url "exercise:add" %}" class="py-3 px-5 bg-sky-700 text-white">Add Exercise</a>
+                        <a href="{% url "exercise:add" %}" >Add Exercise</a>
                     </div>
                     <div class="add-meal">
-                        <a href="{% url "meal:search" %}" class="py-3 px-5 bg-sky-700 text-white">Add Food</a>
+                        <a href="{% url "meal:search" %}" >Add Food</a>
                     </div>
                     <div class="log-weight">
-                        <span>Log weight</span>
+                        <form method="POST" action=".">
+                            {% csrf_token %}
+                            <div class="weight-log-box">
+                                <label for="{{ form.weight.id_for_label }}"></label>
+                                {{ form.weight }}
+                            </div>
+                            <div>
+                                <button class="weight-log-button" type="submit">Log Weight</button>
+                            </div>
+
+                        </form>
                     </div>
 
                 </div>
 
             </div>
             <div class="other">
-                <span>placeholder</span>
+                <span>Weight Changes</span>
+
 
             </div>
 

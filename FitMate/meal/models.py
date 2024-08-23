@@ -54,7 +54,6 @@ class RecipeIngredient(models.Model):
     UNITS_CHOICES = [
         ('gram', 'gram(s)'),
         ('ml', 'ml(s)'),
-        ('serving', 'serving(s)'),
         ('item', 'item(s)')
     ]
     unit = models.CharField(max_length=20, choices=UNITS_CHOICES)

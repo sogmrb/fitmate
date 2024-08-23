@@ -1,0 +1,96 @@
+.form-container {
+    width: 100%;
+    margin: auto;
+}
+
+.form-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.name-form-control {
+    margin-bottom: 15px;
+    border-radius: 18px;
+
+}
+
+.main-exercise-section{
+    margin: 20px 20px;
+    display: flex;
+}
+.exercise-section{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    width: 60%;
+
+}
+
+
+.form-component input,
+.form-component select,
+.form-component textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+.exercise-item-name-burned{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.exercise-item-name{
+    font-weight: bold;
+    display: flex;
+    text-decoration: none;
+    flex: 1;
+}
+.exercise-item-name a{
+    color: black;
+    text-decoration: none;
+
+}
+.exercise-item-burned{
+    font-weight: bold;
+    display: flex;
+    flex: 1;
+}
+
+.my-title{
+    margin: 40px 20px;
+    font-size: xx-large;
+    font-weight: bold;
+
+}
+
+.burned-stat{
+    display: flex;
+    font-weight: bold;
+    font-size: x-large;
+    margin: 10px;
+}
+
+.stat-burned{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(204, 204, 190, 0.34);
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0;
+    align-items: center;
+    width: 140px;
+    height: 140px;
+    padding: 15px;
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+}

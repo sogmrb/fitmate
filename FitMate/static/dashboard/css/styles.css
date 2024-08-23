@@ -6,9 +6,9 @@ div{
     font-family: Karla, serif;
 }
 .navbar{
-    padding-top: 30px;
+    padding-top: 10px;
     margin: 0 0;
-    background-color: rgb(168, 193, 167);
+    background-color: rgba(85, 173, 155, 0.4);
     border-radius: 12px 12px 0 0;
 
 }
@@ -69,7 +69,7 @@ div{
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
-    background-color: #83a58a;
+    background-color: #55AD9B;
     color: white;
     border-radius: 15px 15px 0 0;
     text-decoration: none;
@@ -79,12 +79,12 @@ div{
 }
 .sections-item-active{
     background-color: white;
-    color: #83a58a;
+    color: #55AD9B;
 }
 
 
 .sections-item-active a{
-    background-color: #83a58a;
+    background-color: #55AD9B;
 }
 .sections-item a{
     color: white;
@@ -107,20 +107,20 @@ div{
     background-color: white;
     border-radius: 20px;
     padding-top: 50px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
     gap: 40px;
 }
 
 .personal-info {
     display: flex;
     flex-direction: column;
-    background-color: rgba(204, 204, 190, 0.34);
+    background-color: rgb(241, 248, 232);
     border-radius: 15px;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 0;
-    width: 400px;
+    width: 600px;
     justify-content: left;
     padding: 20px;
     box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
@@ -160,8 +160,9 @@ div{
 .date-logs {
     display: flex;
     flex-direction: column;
-    background-color: rgba(204, 204, 190, 0.34);
+    background-color: rgb(241, 248, 232);
     border-radius: 15px;
+    width: 600px;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 0;
@@ -184,7 +185,6 @@ div{
     justify-content: center;
     margin: 10px;
     padding: 10px;
-    display: flex;
     width: 110px;
     height: 110px;
     flex:1;
@@ -214,8 +214,8 @@ div{
 }
 
 .bottom-section{
-    margin-left: 30px;
-    margin-right: 50px;
+    margin-left: 90px;
+    margin-right: 100px;
     display: flex;
     flex:5;
 }
@@ -239,12 +239,12 @@ div{
 .macro-progress-bars{
     display: flex;
     flex-direction: column;
-    background-color: rgba(204, 204, 190, 0.34);
+    background-color: rgb(241, 248, 232);
     border-radius: 15px;
-    margin-left: 10px;
+
     margin-right: 10px;
     margin-top: 0;
-    width: 400px;
+    width: 600px;
     justify-content: left;
     gap:10px;
     padding: 20px;
@@ -303,15 +303,20 @@ div{
 .add-log{
     display: flex;
     gap:10px;
-
+    margin-left: 10px;
     margin-top:20px;
 }
 .add-exercise, .add-meal{
-    background-color: #a1baa1;
+    background-color: #55AD9B;
     box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
-    padding: 30px;
-    border-radius: 12px;
+    padding-top: 40px;
+    border-radius: 18px;
     transition: filter 0.1s;
+    width: 140px;
+    height:70px;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
 }
 .add-exercise a, .add-meal a{
     text-decoration: none;
@@ -325,6 +330,28 @@ div{
 
 .add-exercise:active, .add-meal:active{
     filter: brightness(1.1);
+}
+
+.weight-log-box input{
+    width: 135px;
+    height:40px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.weight-log-button{
+    color: white;
+    border:none;
+    background-color: #55AD9B;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    padding: 10px;
+
+    border-radius: 12px;
+    transition: filter 0.1s;
+    width: 140px;
+    height:55px;
+
 }
 
 

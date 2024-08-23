@@ -22,14 +22,24 @@
         <a href="{% url 'exercise:add' %}?date={{ date|date:"Y-m-d" }}" class="add-food-button">Add Exercise</a>
     </div>
 
-    <div class="main-meal-section">
-        <div class="meal-section">
+    <div class="my-title">My Exercises</div>
+    <div class="main-exercise-section">
+        <div class="exercise-section">
             {% if message %}
                 <p>{{ message }}</p>
             {% else %}
-                <div class="meal-time">
-                    Breakfast
-                </div>
+                {% for exercise in exercise_entries %}
+                        <div class="exercise-item">
+                            <div class="exercise-item-name-burned">
+                                <div class="exercise-item-name">
+                                    <a href="{% url "meal:detail" exercise.pk %}"> {{ exercise.name }}</a>
+                                </div>
+                                <div class="exercise-item-burned">
+                                    {{ exercise.duration }} mins &#183; {{ exercise.burned_calories }} cals
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
 
             {% endif %}
         </div>
@@ -39,17 +49,13 @@
             {% else %}
 
 
-                <div class="stat-box">
-                    <span class="stat-title">calories</span>
-                    <span class="eaten-stat">
-                        {{ daily_stats.total_daily_calories }}
+                <div class="stat-burned">
+                    <span class="stat-title">burned calories</span>
+                     <span class="burned-stat" style="text-align: center;">
+                        {{ burned }} cals
                     </span>
-                    <span class="total-stat">
-                        of
-                    </span>
-                    <span class="total-stat">
-                        1600 cals
-                    </span>
+
+
 
                 </div>
 

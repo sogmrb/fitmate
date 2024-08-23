@@ -18,7 +18,8 @@
                         <p class="welcome-text">WELCOME TO FITMATE</p>
                     </div>
                     <div class="buttons-container-welcome">
-                        <button type="button" class="form__button form__button--begin_button" onclick="showNextSection()">
+                        <button type="button" class="form__button form__button--begin_button"
+                                onclick="showNextSection()">
                             BEGIN
                         </button>
                     </div>
@@ -35,7 +36,6 @@
                     <div class="name-form">
                         <div class="name-box">
                             {{ profile_form.name }}
-
                         </div>
 
                         <div class="buttons-container">
@@ -87,7 +87,8 @@
                         <div class="activity-container">
                             {% for choice in profile_form.activity_level %}
                                 <div class="activity-form-control">
-                                    {{ choice.tag }} <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                                    {{ choice.tag }} <label
+                                        for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
                                 </div>
                             {% endfor %}
                         </div>
@@ -141,15 +142,23 @@
             <!-- sign up section -->
             <section class="welcome__page welcome__page--create_account welcome__page--active" style="display: none;">
                 <div class="main-container">
-                    {{ account_form.non_field_errors }}
-                    {% for field in account_form %}
-                        <div class="form-group">
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
-                            <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {{ field.errors }}
+                    <div class="signup-form">
+                        {% for field in account_form %}
+                            <div class="signup-form-field">
+                                <label>{{ field.label_tag }}</label>
+                                {{ field }}
+                                <span class="form-help-text">{{ field.help_text }}</span>
+                                <div class="form-error">
+                                    {{ field.errors }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="form-error">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    </div>
 
                     <div class="buttons-container">
                         <button type="button" class="form__button" onclick="showPrevSection()">
@@ -165,17 +174,49 @@
     <script>
         let sectionIdx = 0;
         const sections = document.querySelectorAll('.welcome__page');
-        function showNextSection() {
-            sections[sectionIdx].style.display = 'none';
-            sectionIdx++;
-            sections[sectionIdx].style.display = 'block';
 
+        function showNextSection() {
+
+            if (formIsValid(sections[sectionIdx])) {
+                sections[sectionIdx].style.display = 'none';
+                sectionIdx++;
+                sections[sectionIdx].style.display = 'block';
+            }
 
         }
+
         function showPrevSection() {
             sections[sectionIdx].style.display = 'none';
             sectionIdx--;
             sections[sectionIdx].style.display = 'block';
+        }
+
+        function formIsValid(section) {
+            let inputs = section.querySelectorAll('input');
+            if (!inputs) return true;
+
+            let radioIsChecked = false;
+
+            for (let input of inputs) {
+                if (input.type === 'text' || input.type === 'number') {
+                    const value = input.value.trim()
+                    if (!value) {
+                        alert("Please fill the form.")
+                        return false;
+                    }
+                }
+
+                if (input.type === 'radio') {
+                    if (input.checked) {
+                        radioIsChecked = true
+                    }
+                }
+            }
+            if (section.querySelector('input[type=radio]') && !radioIsChecked) {
+                alert("Please select an option.");
+                return false;
+            }
+            return true;
         }
     </script>
 

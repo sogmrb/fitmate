@@ -15,10 +15,19 @@
         <form method="POST" action="?date={{ date }}">
             {% csrf_token %}
             <div class="form-content">
-                <span class="form-label">{{ form.quantity.label_tag }}</span> <span
-                    class="form-input">{{ form.quantity }}</span>
-                {{ form.meal_time.label_tag }} {{ form.meal_time }}
-                {{ form.serving.label_tag }} {{ form.serving }}
+                <div class="form-component">
+                    <label>{{ form.quantity.label_tag }}</label>
+                    {{ form.quantity }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.meal_time.label_tag }}</label>
+                    {{ form.meal_time }}
+                </div>
+                <div class="form-component">
+                    <label for="{{ form.serving.label_tag }}"></label>
+                    {{ form.serving }}
+                </div>
+
             </div>
             <div class="form-button">
                 <button type="submit">Submit</button>

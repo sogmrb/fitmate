@@ -6,14 +6,32 @@
     <head>
         <title>Search Results</title>
     </head>
+        <div class="search-body">
+        <div class="search-form-results">
+            <form method="GET" action=".">
+                <div class="search-section">
+                    <div class="search-box">
+                        {% csrf_token %}
+                        {{ form.query }}
+                        <input type="hidden" name="date" value="{{ request.GET.date }}">
+                    </div>
+                    <div class="search-icon-div">
+                        <button class="search-icon-button" type="submit">&#128269;</button>
+                    </div>
+                </div>
+            </form>
 
-        <div class="search-results-section">
-            <p>Results</p>
+            <div class="search-results-section">
             {% for result in results %}
                 <div class="search-result-item">
                     <a href="{% url "meal:add" result.id %}?date={{ request.GET.date }}"> {{ result.name }}</a>
                 </div>
             {% endfor %}
         </div>
+
+        </div>
+    </div>
+
+
 
 {% endblock %}

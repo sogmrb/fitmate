@@ -3,6 +3,7 @@
 {% block main_content %}
     <head>
         <title>Meals</title>
+
     </head>
     <div class="add-food-date-section">
         <div class="date-navigation-box">
@@ -19,9 +20,13 @@
         </div>
         <a href="{% url 'meal:search' %}?date={{ date|date:"Y-m-d" }}" class="add-food-button">Add Food</a>
     </div>
-
+    <div class="title-and-get-plan">
+        <div class="my-title">My Meals</div>
+        <a class="get-plan" href="">Give me a meal plan.</a>
+    </div>
 
     <div class="main-meal-section">
+
         <div class="meal-section">
             {% if message %}
                 <p>{{ message }}</p>
@@ -160,7 +165,6 @@
                     </span>
                 </div>
             {% endif %}
-        </div>
     </div>
 
 

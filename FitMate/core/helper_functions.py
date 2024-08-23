@@ -147,3 +147,10 @@ def streak_days(user_entries):
         else:
             break
     return streak_days
+
+def total_daily_burned(entries):
+    burned = 0
+    for entry in entries:
+        burned += entry.burned_calories
+
+    return burned

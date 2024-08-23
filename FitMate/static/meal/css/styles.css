@@ -1,41 +1,101 @@
+.search-body{
+    justify-content: center;
+    align-items: center;
+}
+
 .search-form{
-    margin: 50px 50px;
+
+    background-color: rgb(241, 248, 232);
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+    padding: 20px 20px;
+    width: 50%;
+    border-radius: 20px;
+    height:120px;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    margin:auto;
+    margin-top: 200px;
 }
 .search-section{
+    margin: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    justify-items: center;
     color: #a1baa1;
     gap:0;
 }
 
 
-.search-box{
-    display: flex;
-    flex:1
+.search-box input{
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    width: 300px;
+    height: 30px;
+    padding: 5px 10px;
+
 }
 .search-icon-div{
-    display: flex;
-    flex: 1;
+
 }
 .search-icon-button{
     border: none;
     background-color: transparent;
 }
+.search-form-results{
+
+    background-color: rgb(241, 248, 232);
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+    padding: 20px 20px;
+    width: 500px;
+    border-radius: 20px;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    margin:auto;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+.search-result-item{
+    padding-top:10px;
+    padding-left:100px;
+}
+.search-result-item a{
+    font-size: small;
+
+    text-decoration: none;
+    color: black;
+    transition: font-weight 0.3s;
+
+}
+.search-result-item a:hover{
+    font-weight: bold;
+
+}
+.form-component input,
+.form-component select{
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
 .date-navigation-box{
     display: flex;
 
 }
 .add-food-date-section{
-    padding-top: 10px;
+    padding-top: 5px;
     padding-bottom: 10px;
     padding-right: 10px;
 
     width: 100%;
-
     box-shadow: 0 0 4px rgba(100, 100, 100, 0.25);
-    background-color: rgba(204, 204, 190, 0.24);
+    background-color: rgba(85, 173, 155, 0.2);
     display: flex;
     flex-direction: row;
     margin-top: 40px;
@@ -61,11 +121,12 @@
 
 
 .add-food-button{
-    background-color: #a1baa1;
+    background-color: #55AD9B;
     box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
     width: 120px;
     padding: 10px;
     margin-right: 20px;
+    margin-top:5px;
     border-radius: 12px;
     transition: filter 0.1s;
     text-align: center;
@@ -81,8 +142,15 @@
 .add-food-button:active{
     filter: brightness(1.1);
 }
+
+.my-title{
+    margin: 40px 20px;
+    font-size: xx-large;
+    font-weight: bold;
+
+}
 .main-meal-section{
-    margin: 80px 20px;
+    margin: 20px 20px;
     display: flex;
 }
 .meal-section{
@@ -94,16 +162,17 @@
 .stats-section{
     display: flex;
     width: 40%;
+    flex-wrap: wrap;
 
 }
 
 .meal-time{
     font-size: large;
     font-weight: bold;
-    border-top: 1px solid black;
+    border-top: 1px solid #ccc;
     padding: 10px;
     margin-top: 10px;
-    color: #7ea086;
+    color: #55AD9B;
 }
 
 .food-item{
@@ -140,7 +209,7 @@
 .stat-box{
     display: flex;
     flex-direction: column;
-    background-color: rgba(204, 204, 190, 0.34);
+    background-color: rgb(241, 248, 232);
     border-radius: 15px;
     margin-left: 10px;
     margin-right: 10px;
@@ -165,6 +234,7 @@
     font-size: small;
 }
 .stat-title{
+    text-align: center;
     display: flex;
     color: rgba(0, 0, 0, 0.12);
     margin-top: 0;
@@ -267,6 +337,24 @@
 
 .form-button:active{
     filter: brightness(1.1);
+}
+.title-and-get-plan{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.get-plan{
+    color: #ccc;
+    padding-top: 10px;
+    text-decoration: none;
+    font-size: small;
+    transition: filter 0.3s, font-weight 0.3s;
+}
+
+.get-plan:hover{
+    filter: brightness(0.8);
+    font-weight: 500;
 }
 
 
