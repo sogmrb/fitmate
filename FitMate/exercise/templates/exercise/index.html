@@ -4,62 +4,311 @@
 
 {% block main_content %}
     <head>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+                crossorigin="anonymous"></script>
+
+        <script>
+            $(function () {
+                $("#datepicker").datepicker({
+                    onSelect: function (dateText) {
+                        var selectedDate = $.datepicker.formatDate('yy-mm-dd', new Date(dateText));
+                        $("#selected_date").val(selectedDate);
+                        $("#date_form").submit();
+                    }
+                });
+            });
+        </script>
         <title>Exercises</title>
     </head>
-    <div class="add-food-date-section">
-        <div class="date-navigation-box">
-            {% if next_date is None %}
-                <a href="?date={{ prev_date }}" class="nav-button">&lt;</a>
-                <span style="margin-right: 40px;">Today</span>
-            {% else %}
-                <a href="?date={{ prev_date }}" class="nav-button">&lt;</a>
-                <span>{{ date }}</span>
-                <a href="?date={{ next_date }}" class="nav-button">&gt;</a>
-            {% endif %}
 
-
+    <!-- Search Exercise Modal -->
+    <div class="modal fade" id="searchExerciseModal" tabindex="-1" aria-labelledby="searchExerciseModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchExerciseModalLabel">Search Exercise</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <div id="loadingSpinner" class="text-center">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
         </div>
-        <a href="{% url 'exercise:add' %}?date={{ date|date:"Y-m-d" }}" class="add-food-button">Add Exercise</a>
     </div>
 
-    <div class="my-title">My Exercises</div>
+    <!-- Add Exercise Modal -->
+    <div class="modal fade" id="addExerciseModal" tabindex="-1" aria-labelledby="addExerciseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExerciseModalLabel">Add Exercise Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="loadingSpinner" class="text-center">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#searchExerciseModal').on('show.bs.modal', function (event) {
+                const modal = $(this);
+                $.ajax({
+                    url: "{% url 'exercise:search' %}",
+                    type: "GET",
+                    data: {
+                        date: "{{ date | date:"Y-m-d" }}"
+                    },
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                        $('#searchExerciseForm').on('submit', function (event) {
+                            event.preventDefault();
+                            modal.find('#loadingSpinner').show();
+                            const query = $('input[name="query"]').val();
+                            const date = $('input[name="date"]').val();
+
+                            console.log(query)
+
+                            $.ajax({
+                                url: "{% url 'exercise:search' %}",
+                                type: "GET",
+                                data: {
+                                    query: query,
+                                    date: date
+                                },
+                                success: function (response) {
+                                    modal.find('#loadingSpinner').hide();
+                                    $('.search-results-section, .no-results').remove();
+                                    if (response.success) {
+                                        const results = response.results;
+                                        const resultsContainer = $('<div class="search-results-section"></div>');
+                                        resultsContainer.empty();
+                                        if (results.length !== 0) {
+                                            results.forEach(function (item) {
+                                                const resultItem = `
+                                                <div class="search-result-item">
+                                                    <a href="#" class="open-add-modal" data-exercise-id="${item.id}" data-date="${date}">
+                                                        ${item.name}
+                                                    </a>
+                                                </div>
+                                            `;
+                                                resultsContainer.append(resultItem);
+                                            });
+                                            $('.search-results-section').remove();
+                                            $('#searchExerciseForm').after(resultsContainer);
+
+                                            $('.open-add-modal').on('click', function (e) {
+                                                e.preventDefault();
+                                                const exerciseId = $(this).data('exercise-id');
+                                                const date = $(this).data('date');
+
+                                                openAddExerciseModal(exerciseId, date);
+                                            });
+                                        } else {
+                                            $('.search-results-section').remove();
+                                            $('#searchExerciseForm').after(`
+                                            <div class="no-results">
+                                                No results found. <a href="#" id="addManualExercise">Add exercise manually</a>
+                                            </div>
+                                        `);
+                                            $('#addManualExercise').on('click', function (e) {
+                                            e.preventDefault();
+                                            openAddManualExerciseModal(null, date);
+                                        });
+                                        }
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            });
+                        });
+
+                        function openAddExerciseModal(exerciseId, date) {
+                            const addExerciseModal = $('#addExerciseModal');
+                            modal.find('#addExerciseLoadingSpinner').show();
+                            $.ajax({
+                                url: "{% url 'exercise:add' 0 %}".replace('0', exerciseId),
+                                type: "GET",
+                                data: {
+                                    'date': date
+                                },
+                                success: function (response) {
+                                    $('#searchExerciseModal').modal('hide');
+                                    modal.find('#addExerciseLoadingSpinner').hide();
+                                    addExerciseModal.find('.modal-body').html(response);
+                                    addExerciseModal.modal('show');
+
+                                    $('#addExerciseForm').on('submit', function (event) {
+                                        event.preventDefault();
+                                        let formData = $(this).serializeArray();
+                                        formData.push({name: 'date', value: date});
+                                        $.ajax({
+                                            url: "{% url 'exercise:add' 0 %}".replace('0', exerciseId),
+                                            type: "POST",
+                                            data: $.param(formData),
+
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    addExerciseModal.modal('hide');
+                                                    location.reload();
+                                                } else {
+                                                    addExerciseModal.find('.modal-body').html(response.html);
+                                                }
+                                            },
+                                            error: function (xhr, status, error) {
+                                                alert("An error occurred while submitting the form. Please try again.");
+                                            }
+                                        });
+                                    })
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            })
+                        }
+                        function openAddManualExerciseModal(exerciseId, date) {
+                            const addExerciseModal = $('#addExerciseModal');
+                            modal.find('#addExerciseLoadingSpinner').show();
+                            $.ajax({
+                                url: "{% url 'exercise:add_manual' %}",
+                                type: "GET",
+                                data: {
+                                    'date': date
+                                },
+                                success: function (response) {
+                                    $('#searchExerciseModal').modal('hide');
+                                    modal.find('#addExerciseLoadingSpinner').hide();
+                                    addExerciseModal.find('.modal-body').html(response);
+                                    addExerciseModal.modal('show');
+
+                                    $('#addExerciseForm').on('submit', function (event) {
+                                        event.preventDefault();
+                                        let formData = $(this).serializeArray();
+                                        formData.push({name: 'date', value: date});
+                                        $.ajax({
+                                            url: "{% url 'exercise:add_manual'%}",
+                                            type: "POST",
+                                            data: $.param(formData),
+
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    addExerciseModal.modal('hide');
+                                                    location.reload();
+                                                } else {
+                                                    addExerciseModal.find('.modal-body').html(response.html);
+                                                }
+                                            },
+                                            error: function (xhr, status, error) {
+                                                alert("An error occurred while submitting the form. Please try again.");
+                                            }
+                                        });
+                                    })
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+    <div class="add-food-date-section">
+        <button type="button" class="add-food-button" style="border:none;" data-toggle="modal" data-target="#searchExerciseModal"
+                data-date="{{ date | date:'Y-m-d' }}">
+            &#43; Add Exercise
+        </button>
+
+        <div class="date-navigation-box">
+            <div class="navigate-date">
+                {% if isToday %}
+                    <a href="?date={{ prev_date }}" class="nav-button">&lt</a>
+                    <span>Today</span>
+                    <a href="?date={{ next_date }}" class="nav-button">&gt</a>
+                {% else %}
+                    <a href="?date={{ prev_date }}" class="nav-button">&lt</a>
+                    <span>{{ date }}</span>
+                    <a href="?date={{ next_date }}" class="nav-button">&gt</a>
+                {% endif %}
+            </div>
+            <div class="select-date">
+                <form id="date_form" method="get" action="{% url 'exercise:index' %}">
+                    <p>Date: <input type="text" id="datepicker"></p>
+                    <input type="hidden" id="selected_date" name="date">
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="title-and-get-plan">
+        <div class="my-title">My Exercises</div>
+    </div>
     <div class="main-exercise-section">
         <div class="exercise-section">
             {% if message %}
-                <p>{{ message }}</p>
+                <div class="no-entries">
+                    No entries for this day.
+                </div>
             {% else %}
                 {% for exercise in exercise_entries %}
-                        <div class="exercise-item">
-                            <div class="exercise-item-name-burned">
-                                <div class="exercise-item-name">
-                                    <a href="{% url "meal:detail" exercise.pk %}"> {{ exercise.name }}</a>
-                                </div>
-                                <div class="exercise-item-burned">
-                                    {{ exercise.duration }} mins &#183; {{ exercise.burned_calories }} cals
-                                </div>
+                    <div class="exercise-item">
+                        <div class="exercise-item-name-burned">
+                            <div class="exercise-item-name">
+                                <a href="{% url "exercise:detail" exercise.pk %}"> {{ exercise.name }}</a>
+                            </div>
+                            <div class="exercise-item-burned">
+                                {{ exercise.duration }} mins &#183; {{ exercise.burned_calories }} cals
                             </div>
                         </div>
+                    </div>
                 {% endfor %}
 
             {% endif %}
         </div>
         <div class="stats-section">
-            {% if message %}
-                <p>No stats available for this day.</p>
-            {% else %}
-
-
                 <div class="stat-burned">
                     <span class="stat-title">burned calories</span>
-                     <span class="burned-stat" style="text-align: center;">
+                    <span class="burned-stat" style="text-align: center;">
                         {{ burned }} cals
                     </span>
-
-
-
                 </div>
-
-            {% endif %}
+                <div class="stat-burned">
+                    <span class="stat-title">total minutes</span>
+                    <span class="burned-stat" style="text-align: center;">
+                        {{ minutes }} mins
+                    </span>
+                </div>
         </div>
     </div>
 

@@ -1,0 +1,143 @@
+{% extends 'core/exercises.html' %}
+
+{% block main_content %}
+    {% load static %}
+    <head>
+        <title>Entry Details</title>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+                crossorigin="anonymous"></script>
+    </head>
+
+    <!-- Edit Exercise Modal -->
+    <div class="modal fade" id="editExerciseModal" tabindex="-1" aria-labelledby="editExerciseModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editExerciseModalLabel">Edit Exercise Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="loadingSpinner" class="text-center">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#editExerciseModal').on('show.bs.modal', function (event) {
+                const modal = $(this);
+                const button = $(event.relatedTarget); // Button that triggered the modal
+                const exercise_id = button.data('exercise-id');
+
+                modal.find('#loadingSpinner').show();
+
+                $.ajax({
+                    url: "{% url 'exercise:edit' 0 %}".replace('0', exercise_id),
+                    type: "GET",
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                        modal.find('#loadingSpinner').hide();
+
+                        // Unbind any previous submit handlers to avoid multiple bindings
+                        $('#editExerciseForm').off('submit').on('submit', function (event) {
+                            event.preventDefault();
+                            const formData = $(this).serialize();
+
+                            $.ajax({
+                                url: "{% url 'exercise:edit' 0 %}".replace('0', exercise_id),
+                                type: "POST",
+                                data: formData,
+                                success: function (response) {
+                                    if (response.success) {
+                                        $('#editExerciseModal').modal('hide');
+                                        location.reload();
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred while updating. Please try again.");
+                                }
+                            });
+                        });
+                    },
+                    error: function () {
+                        alert("An error occurred while loading the form.");
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+
+    <div class="back-section">
+        <div class="back-button">
+            <a href="{% url 'exercise:index' %}?date={{ entry.date|date:"Y-m-d" }}" class="back-btn">Back</a>
+        </div>
+    </div>
+
+    <div class="meal-title-and-stats">
+        <div class="entry-title">
+            <p>{{ entry.name }}</p>
+        </div>
+        <table class="entry-information-table">
+            <tbody>
+            <tr>
+                <th class="entry-information-name">Date:</th>
+                <td class="entry-information-value">{{ entry.date }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Category:</th>
+                <td class="entry-information-value">
+                    {% if entry.category == 'cardio' %}
+                        Cardio
+                    {% elif entry.category == 'strength' %}
+                        Strength
+                    {% else %}
+                        Flexibility
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Duration:</th>
+                <td class="entry-information-value">{{ entry.duration }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Burned Calories:</th>
+                <td class="entry-information-value">{{ entry.burned_calories }}</td>
+            </tr>
+            <tr>
+                <th class="entry-information-name">Notes:</th>
+                <td class="entry-information-value">{{ entry.notes }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="edit-delete-section">
+            <div class="edit-button">
+                <a href="#" class="edit-btn" data-toggle="modal" data-target="#editExerciseModal"
+                   data-exercise-id="{{ entry.pk }}">Edit</a>
+            </div>
+            <div class="edit-button">
+                <a href="{% url 'exercise:delete' entry.pk %}" class="delete-btn">Delete</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

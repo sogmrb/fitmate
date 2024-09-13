@@ -1,0 +1,65 @@
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
+
+    <title></title>
+</head>
+
+
+<div class="form-container">
+    {% if manual %}
+        <form method="POST" id="editExerciseForm">
+            {% csrf_token %}
+            <div class="form-content">
+                <div class="form-component">
+                    <label>{{ form.name.label_tag }}</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.category.label_tag }}</label>
+                    {{ form.category }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.duration.label_tag }}</label>
+                    {{ form.duration }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.burned_calories.label_tag }}</label>
+                    {{ form.burned_calories }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.notes.label_tag }}</label>
+                    {{ form.notes }}
+                </div>
+            </div>
+            <div class="buttons-container">
+                <button class="form-button" type="submit">Submit</button>
+            </div>
+        </form>
+    {% else %}
+        <div class="entry-title">
+            <p>{{ entry.name }}</p>
+        </div>
+        <form method="POST" id="editExerciseForm">
+            {% csrf_token %}
+            <div class="form-content">
+                <div class="form-component">
+                    <label>{{ form.category.label_tag }}</label>
+                    {{ form.category }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.duration.label_tag }}</label>
+                    {{ form.duration }}
+                </div>
+                <div class="form-component">
+                    <label>{{ form.notes.label_tag }}</label>
+                    {{ form.notes }}
+                </div>
+            </div>
+            <div class="buttons-container">
+                <button class="form-button" type="submit">Submit</button>
+            </div>
+        </form>
+    {% endif %}
+</div>

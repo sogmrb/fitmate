@@ -1,0 +1,107 @@
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
+
+    <title></title>
+</head>
+
+<div class="form-container" style="width: 90%;">
+    <form method="POST" id="editProfileForm">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}:</label>
+        {{ form.name }}
+        {% if form.name.errors %}
+            <div class="form-error">{{ form.name.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.goal.id_for_label }}">{{ form.goal.label }}:</label>
+        <div class="custom-radio-group">
+            {% for radio in form.goal %}
+                <div class="form-check">
+                    {{ radio.tag }}
+                    <label class="form-check-label">{{ radio.choice_label }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        {% if form.goal.errors %}
+            <div class="form-error">{{ form.goal.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.activity_level.id_for_label }}">{{ form.activity_level.label }}:</label>
+        <div class="custom-radio-group">
+            {% for radio in form.activity_level %}
+                <div class="form-check">
+                    {{ radio.tag }}
+                    <label class="form-check-label">{{ radio.choice_label }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        {% if form.activity_level.errors %}
+            <div class="form-error">{{ form.activity_level.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.sex.id_for_label }}">{{ form.sex.label }}:</label>
+        <div class="custom-radio-group">
+            {% for radio in form.sex %}
+                <div class="form-check">
+                    {{ radio.tag }}
+                    <label class="form-check-label">{{ radio.choice_label }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        {% if form.sex.errors %}
+            <div class="form-error">{{ form.sex.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Age Field -->
+    <div class="form-group">
+        <label for="{{ form.age.id_for_label }}">{{ form.age.label }}:</label>
+        {{ form.age }}
+        {% if form.age.errors %}
+            <div class="form-error">{{ form.age.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Height Field -->
+    <div class="form-group">
+        <label for="{{ form.height.id_for_label }}">{{ form.height.label }}:</label>
+        {{ form.height }}
+        {% if form.height.errors %}
+            <div class="form-error">{{ form.height.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Weight Field -->
+    <div class="form-group">
+        <label for="{{ form.weight.id_for_label }}">{{ form.weight.label }}:</label>
+        {{ form.weight }}
+        {% if form.weight.errors %}
+            <div class="form-error">{{ form.weight.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Goal Weight Field -->
+    <div class="form-group">
+        <label for="{{ form.goal_weight.id_for_label }}">{{ form.goal_weight.label }}:</label>
+        {{ form.goal_weight }}
+        {% if form.goal_weight.errors %}
+            <div class="form-error">{{ form.goal_weight.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="form-button" style="margin-right: 20px;">Save changes</button>
+</form>
+
+</div>

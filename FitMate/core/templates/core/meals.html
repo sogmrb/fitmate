@@ -10,12 +10,12 @@
         <title></title>
     </head>
 
-    <div class="navbar">
+    <div class="mynavbar">
         <div class="top">
             <div class="fitmate">Fitmate!</div>
             <div class="spacer"></div>
             <div class="right-section">
-                <a class="logout-button"href="{% url "user:my_login" %}">LOG OUT</a>
+                <a class="logout-button"href="{% url "user:my_logout" %}">LOG OUT</a>
             </div>
 
         </div>
@@ -29,7 +29,7 @@
         </div>
 
     </div>
-    <div>
+    <div class="main-content">
         {% block main_content %}
         {% endblock %}
     </div>

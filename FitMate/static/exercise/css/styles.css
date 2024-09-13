@@ -23,10 +23,12 @@
 .exercise-section{
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
-    border-top: 1px solid #ccc;
-    padding: 10px;
-    width: 60%;
+    width: 55%;
+    border-radius: 20px;
+    background-color: rgb(241, 248, 232);
+    box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
+    padding: 30px;
+    margin-right: 40px;
 
 }
 
@@ -77,19 +79,20 @@
     display: flex;
     font-weight: bold;
     font-size: x-large;
+    line-height: 80%;
     margin: 10px;
 }
 
 .stat-burned{
     display: flex;
     flex-direction: column;
-    background-color: rgba(204, 204, 190, 0.34);
+    background-color: rgb(241, 248, 232);
     border-radius: 15px;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 0;
     align-items: center;
-    width: 140px;
+    width: 180px;
     height: 140px;
     padding: 15px;
     box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);

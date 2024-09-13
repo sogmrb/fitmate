@@ -7,12 +7,18 @@ form {
     padding: 10px;
 }
 .form-error {
-    color: red;
-    font-size: small;
-    margin-top: 5px;
-    width:40%;
+    color: #ff0000;
+    font-weight: bold;
+    font-size: smaller;
+    margin-top: 20px;
+    margin-bottom:10px;
+    width:70%;
+    text-align: center;
 }
-
+.form-error-small{
+    margin-top: 10px;
+    margin-bottom:10px;
+}
 .login-button{
     position: fixed;
     border-radius: 12px;
@@ -31,13 +37,19 @@ form {
     padding: 6px 7px;
     text-align: center;
     width: 100px;
-    transition: filter 3ms, box-shadow 3ms;
+    transition: filter 0.3s, box-shadow 0.3s, font-size 0.3s;
 
 }
 .login-button:hover{
+    color:#55AD9B;
+    text-decoration: none;
+    font-size: small;
     filter: brightness(1.05);
 }
 .login-button:active{
+    color:#55AD9B;
+    text-decoration: none;
+    font-size: small;
     filter: brightness(1.1);
 }
 
@@ -60,7 +72,7 @@ form {
     font-weight: bold;
     transition: filter 3ms, box-shadow 3ms;
     font-size: medium;
-    text-decoration: none; /* Remove underline from the link */
+    text-decoration: none;
     font-family: Karla, serif;
 }
 .form__button:hover{
@@ -91,8 +103,6 @@ form {
     background-color: rgb(241, 248, 232);
     box-shadow: 0 0 20px rgba(83, 166, 149, 0.25);
     border-radius: 20px;
-    margin: auto;
-    margin-top: 200px;
     padding: 50px 30px;
     max-width: 700px;
     width: 80%;
@@ -103,6 +113,18 @@ form {
     justify-content: center;
     gap: 10px;
 
+}
+.welcome__page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+.login-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
 }
 
 .buttons-container {
@@ -128,6 +150,7 @@ form {
 
 .name-box{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
@@ -135,7 +158,6 @@ form {
 
 .name-form-control {
     width: 60%;
-    margin-bottom: 60px;
     padding: 10px;
     font-family: Karla, serif;
     font-size: small;
@@ -251,8 +273,17 @@ form {
     font-weight: bold;
     transition: filter 3ms, box-shadow 3ms;
     font-size: medium;
-    text-decoration: none; /* Remove underline from the link */
+    text-decoration: none;
     font-family: Karla, serif;
+}
+
+.login-form-button:hover{
+    filter: brightness(1.05);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+.login-form-button:active{
+    filter: brightness(1.1);
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 
@@ -265,18 +296,15 @@ form {
 .sex-container{
     display: flex;
     justify-content: center;
-    padding-bottom: 20px;
 
 }
 
 .age-h-w-container {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
     align-items: center;
     margin-bottom: 50px;
-
-
+    row-gap: 1px;
 }
 
 .profile-form-control {
@@ -302,8 +330,36 @@ form {
     flex-direction: column;
 }
 
+.signup-form-control label{
+    font-family: Karla, serif;
+    display: block;
+    padding: 5px;
+    width: 100px;
+    margin: 5px;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    border-radius: 12px;
+    text-align: center;
+}
+
+
+.signup-form-control{
+    width: 100%;
+    height: 40px;
+    padding: 10px 30px;
+    font-family: Karla, serif;
+    font-size: small;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
 .form-help-text{
     font-size: smaller;
-    color: rgba(133, 236, 236, 0.4);
+    color: rgb(83, 166, 149);
     width: 80%;
+}
+.weight-chart{
+    width: 80%;
+    padding-top: 20px;
 }

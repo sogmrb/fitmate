@@ -1,41 +1,46 @@
-p{
+p {
     font-family: Karla, serif;
     margin: 0;
 }
-div{
+
+div {
     font-family: Karla, serif;
 }
-.navbar{
+
+.mynavbar {
     padding-top: 10px;
     margin: 0 0;
     background-color: rgba(85, 173, 155, 0.4);
     border-radius: 12px 12px 0 0;
-
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
-.top{
-    display:grid;
+
+.top {
+    display: grid;
     grid-template-columns: 4fr 1fr 1fr;
 
 }
 
-.fitmate{
+.fitmate {
     padding-left: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 0;
     display: inline-block;
     font-weight: bolder;
     font-size: xx-large;
     color: white;
 }
 
-.hi-name{
+.hi-name {
     color: white;
     font-weight: 500;
     display: inline-block;
 }
 
-.logout-button{
+.logout-button {
     color: white;
-    text-decoration: none; /* Remove underline from the link */
+    text-decoration: none;
     font-family: Karla, serif;
     font-size: smaller;
     display: inline-block;
@@ -46,11 +51,16 @@ div{
     font-weight: 800;
     padding: 0 10px;
     text-align: center;
-
+    transition: font-size 0.3s;
 
 }
+.logout-button:hover{
+    color: white;
+    text-decoration: none;
+    font-size:small;
+}
 
-.sections{
+.sections {
     color: white;
     display: flex;
     width: 100%;
@@ -60,88 +70,82 @@ div{
     height: 40px;
 }
 
-.sections-item{
+a.sections-item {
     font-family: Karla, serif;
-    flex:1;
+    flex: 1;
     height: 100%;
-    padding-top: 10px;
+    padding-top: 5px;
     border: none;
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
     background-color: #55AD9B;
     color: white;
-    border-radius: 15px 15px 0 0;
+    border-radius: 8px 8px 0 0;
     text-decoration: none;
     align-items: center;
     vertical-align: middle;
     margin-bottom: 0;
 }
-.sections-item-active{
+
+a.sections-item-active {
     background-color: white;
     color: #55AD9B;
+    box-shadow: 0 -8px 10px rgba(0, 0, 0, 0.1);
 }
 
 
-.sections-item-active a{
-    background-color: #55AD9B;
-}
-.sections-item a{
-    color: white;
-    text-decoration: none;
-}
 
-
-.sections-item-dashboard{
+.sections-item-dashboard {
+    margin-top:100px;
     display: flex;
-    margin: 0;
     flex-direction: column;
     background-color: white;
-    height: 1000px;
 }
 
 .personal-info-date {
     display: flex;
     justify-content: space-between;
-    flex:1;
+    flex: 1;
     background-color: white;
     border-radius: 20px;
-    padding-top: 50px;
     margin-left: 100px;
     margin-right: 100px;
-    gap: 40px;
+    margin-top:100px;
+    gap: 20px;
 }
 
 .personal-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background-color: rgb(241, 248, 232);
     border-radius: 15px;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 0;
-    width: 600px;
-    justify-content: left;
+    width: 700px;
+    justify-content: space-between;
     padding: 20px;
     box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
 
 }
 
-.name-w-h{
+.name-w-h {
     display: flex;
     flex-direction: column;
-    margin-bottom : 10px;
+    margin-bottom: 10px;
 }
 
-.name{
-    color: blake;
+.name {
+    color: black;
     font-weight: 700;
     font-size: larger;
     margin-left: 5px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 
 }
-.wha-text{
+
+.wha-text {
     color: black;
     font-size: small;
     font-weight: 500;
@@ -150,7 +154,7 @@ div{
     margin-left: 10px;
 }
 
-.w-h-age{
+.w-h-age {
     margin-top: 5px;
     display: flex;
     flex-direction: column;
@@ -162,7 +166,7 @@ div{
     flex-direction: column;
     background-color: rgb(241, 248, 232);
     border-radius: 15px;
-    width: 600px;
+    width: 700px;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 0;
@@ -171,34 +175,36 @@ div{
     box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
 }
 
-.circle-progressions{
+.circle-progressions {
     display: flex;
-    flex:5;
+    flex: 5;
     align-items: center;
     justify-content: center;
     border-radius: 12px;
 
 }
-.eaten-calories, .burned-calories, .streak-days{
+
+.eaten-calories, .burned-calories, .streak-days {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 10px;
     padding: 10px;
     width: 110px;
-    height: 110px;
-    flex:1;
+    height: 150px;
+    flex: 1;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 18px;
 
 }
 
-.percentage{
+.percentage {
     font-size: xx-large;
     font-weight: bold;
 }
-.percentage-description{
+
+.percentage-description {
     margin-top: 10px;
     font-size: x-small;
     font-weight: bold;
@@ -206,65 +212,117 @@ div{
 
 }
 
-.date-text{
+.date-text {
     display: flex;
-    flex:1;
+    flex: 1;
     font-family: Karla, serif;
     font-size: smaller;
+    margin-left: 10px;
+}
+.date-text span{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.date-text a{
+    text-decoration: none;
+    color: black;
 }
 
-.bottom-section{
+.bottom-section {
     margin-left: 90px;
     margin-right: 100px;
+    margin-top: 30px;
     display: flex;
-    flex:5;
+    flex: 5;
+    justify-content: space-between;
 }
-.macro-add-section{
+
+.macro-add-section {
     display: flex;
     flex-direction: column;
-    flex:1;
+    flex: 1;
     padding: 20px;
-    gap:10px;
-}
-.other{
-    display: flex;
-    flex:1;
+    gap: 10px;
 }
 
-.macro-info{
+.other {
+    display: flex;
+    flex: 1;
+}
+
+.macro-info {
     display: flex;
     flex-direction: column;
 
 }
-.macro-progress-bars{
+
+.macro-progress-bars {
     display: flex;
+    flex:1;
     flex-direction: column;
     background-color: rgb(241, 248, 232);
     border-radius: 15px;
-
+    margin-left:80px;
     margin-right: 10px;
     margin-top: 0;
     width: 600px;
     justify-content: left;
-    gap:10px;
+    gap: 10px;
     padding: 20px;
+    padding-bottom:0;
     box-shadow: 3px 3px 0 rgba(204, 204, 190, 0.74);
 }
-.macro-goals-text{
+
+.move-goal-text {
     font-size: small;
     margin-bottom: 10px;
     margin-left: 20px;
 }
 
-.stat-name{
-    font-weight: 500;
-}
-.progress-row{
+.macro-columns {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    margin: 10px;
 }
+
+.stat-names-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: start;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.progress-bars-column {
+    display: flex;
+    flex-direction: column;
+    flex: 8;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-percent-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-name {
+    display: flex;
+    font-weight: 500;
+    align-items: start;
+    justify-content: start;
+}
+
+.macro-rows {
+    display: flex;
+}
+
 .progress-container {
     width: 100%;
     background-color: #e0e0e0;
@@ -275,18 +333,21 @@ div{
 
 }
 
-.progress-bar{
+.progress-bar {
     height: 10px;
     align-self: start;
 }
-.carb-bar{
+
+.carb-bar {
     background-color: #7ea086;
 }
-.protein-bar{
+
+.protein-bar {
     background-color: #a07e7e;
 
 }
-.fat-bar{
+
+.fat-bar {
     background-color: #7e96a0;
 
 }
@@ -299,60 +360,131 @@ div{
 }
 
 
-
-.add-log{
+.add-log {
     display: flex;
-    gap:10px;
+    flex:1;
+    gap: 20px;
     margin-left: 10px;
-    margin-top:20px;
+    margin-top: 20px;
+    max-width: 650px;
 }
-.add-exercise, .add-meal{
+
+a.add-exercise, a.add-meal {
     background-color: #55AD9B;
+    justify-self: center;
+    text-decoration: none;
+    color: white;
+    font-size: medium;
     box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
     padding-top: 40px;
     border-radius: 18px;
     transition: filter 0.1s;
-    width: 140px;
-    height:70px;
+    height: 110px;
     text-align: center;
-    align-items: center;
     justify-items: center;
-}
-.add-exercise a, .add-meal a{
-    text-decoration: none;
-    color: white;
-    font-size: medium;
+    flex:1;
 }
 
-.add-exercise:hover, .add-meal:hover{
+
+.add-exercise:hover, .add-meal:hover {
     filter: brightness(1.05);
 }
 
-.add-exercise:active, .add-meal:active{
+.add-exercise:active, .add-meal:active {
     filter: brightness(1.1);
 }
 
-.weight-log-box input{
-    width: 135px;
-    height:40px;
+.weight-log-box input {
+    flex:1;
+    height: 40px;
+
     border-radius: 12px;
     border: 1px solid #ccc;
     margin-bottom: 10px;
+    padding-left:5px;
+}
+.goal-log-box input{
+    height: 60px;
+    width:100px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding-left:10px;
+    margin-right:20px;
+
 }
 
-.weight-log-button{
+
+.weight-log-button {
+    width:98%;
     color: white;
-    border:none;
+    border: none;
     background-color: #55AD9B;
     box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
     padding: 10px;
-
     border-radius: 12px;
     transition: filter 0.1s;
-    width: 140px;
-    height:55px;
+    height: 60px;
+    margin-left:5px;
 
 }
+.goal-log-button{
+    color: white;
+    border: none;
+    background-color: #55AD9B;
+    box-shadow: 0 0 20px rgba(100, 100, 100, 0.25);
+    padding: 10px;
+    border-radius: 12px;
+    transition: filter 0.1s;
+    height: 60px;
+    margin-left:5px;
+}
+
+.weight-log-box-and-error {
+    display: flex;
+    flex-direction: column;
+}
+.weight-log-box-and-button {
+    display: flex;
+    flex-direction: row;
+}
+
+.errorlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+.form-error {
+    color: red;
+    font-size: x-small;
+    padding: 10px 10px;
+}
+
+.weight-chart {
+    margin-left: 100px;
+}
+
+.edit-profile-div{
+    padding: 0;
+}
+
+.edit-profile-btn{
+    display: inline-block;
+    border:none;
+    background-color: transparent;
+    font-size: xx-large;
+    padding: 0;
+    margin: 0;
+    text-align: end;
+}
+
+.profile-form-content{
+    display: flex;
+}
+
+
 
 
 

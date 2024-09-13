@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Walking (slow)",
+    "MET_value": 7.5
+  },
+  {
+    "name": "Walking (fast)",
+    "MET_value": 13
+  },
+  {
+    "name": "Running (slow)",
+    "MET_value": 28
+  },
+  {
+    "name": "Running (moderate)",
+    "MET_value": 36
+  },
+  {
+    "name": "Running (fast)",
+    "MET_value": 44
+  },
+  {
+    "name": "Cycling (slow)",
+    "MET_value": 28
+  },
+  {
+    "name": "Cycling (moderate)",
+    "MET_value": 35
+  },
+  {
+    "name": "Cycling (fast)",
+    "MET_value": 42
+  },
+  {
+    "name": "Swimming (moderate)",
+    "MET_value": 21
+  },
+  {
+    "name": "Swimming (fast)",
+    "MET_value": 35
+  },
+  {
+    "name": "Aerobics",
+    "MET_value": 25
+  },
+  {
+    "name": "Cycling (stationary)",
+    "MET_value": 27
+  },
+  {
+    "name": "Elliptical Trainer",
+    "MET_value": 32
+  },
+  {
+    "name": "Rowing (stationary)",
+    "MET_value": 25
+  },
+  {
+    "name": "Ski Machine",
+    "MET_value": 34
+  },
+  {
+    "name": "Stretching",
+    "MET_value": 14
+  },
+  {
+    "name": "Weight Lifting",
+    "MET_value": 21
+  },
+  {
+    "name": "Badminton",
+    "MET_value": 13
+  },
+  {
+    "name": "Basketball",
+    "MET_value": 28
+  },
+  {
+    "name": "Dancing",
+    "MET_value": 20
+  },
+  {
+    "name": "American Football",
+    "MET_value": 32
+  },
+  {
+    "name": "Gymnastics",
+    "MET_value": 25
+  },
+  {
+    "name": "Handball",
+    "MET_value": 42
+  },
+  {
+    "name": "Hockey",
+    "MET_value": 28
+  },
+  {
+    "name": "Martial Arts",
+    "MET_value": 35
+  },
+  {
+    "name": "Jump Rope",
+    "MET_value": 40
+  },
+  {
+    "name": "Soccer",
+    "MET_value": 25
+  },
+  {
+    "name": "Tennis",
+    "MET_value": 25
+  },
+  {
+    "name": "Volleyball",
+    "MET_value": 27
+  },
+  {
+    "name": "Wrestling",
+    "MET_value": 21
+  }
+]

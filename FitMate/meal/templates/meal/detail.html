@@ -6,18 +6,93 @@
     {% load static %}
     <head>
         <title>Entry Details</title>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+                        crossorigin="anonymous"></script>
     </head>
-    <div class="edit-back-section">
-        <div class="back-button">
-            <a href="{% url 'meal:index' %}" class="back-btn">Back</a>
-        </div>
-        <div class="edit-button">
-            <a href="{% url 'meal:edit' entry.pk %}" class="edit-btn">Edit</a>
-        </div>
-        <div class="edit-button">
-            <a href="{% url 'meal:delete' entry.pk %}" class="delete-btn">Delete</a>
+    <!-- Edit Food Modal -->
+    <div class="modal fade" id="editFoodModal" tabindex="-1" aria-labelledby="editFoodModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFoodModalLabel">Edit Food Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="loadingSpinner" class="text-center">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#editFoodModal').on('show.bs.modal', function (event) {
+                const modal = $(this);
+                const button = $(event.relatedTarget); // Button that triggered the modal
+                const food_id = button.data('food-id');
+
+                modal.find('#loadingSpinner').show();
+
+                $.ajax({
+                    url: "{% url 'meal:edit' 0 %}".replace('0', food_id),
+                    type: "GET",
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                        modal.find('#loadingSpinner').hide();
+
+                        // Unbind any previous submit handlers to avoid multiple bindings
+                        $('#editFoodForm').off('submit').on('submit', function (event) {
+                            event.preventDefault();
+                            const formData = $(this).serialize();
+
+
+                            $.ajax({
+                                url: "{% url 'meal:edit' 0 %}".replace('0', food_id),
+                                type: "POST",
+                                data: formData,
+                                success: function (response) {
+                                    if (response.success) {
+                                        $('#editFoodModal').modal('hide');
+                                        location.reload();
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred while updating. Please try again.");
+                                }
+                            });
+                        });
+                    },
+                    error: function () {
+                        alert("An error occurred while loading the form.");
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+
+
+
+    <div class="back-section">
+        <div class="back-button">
+            <a href="{% url 'meal:index' %}?date={{ entry.date|date:"Y-m-d" }}" class="back-btn">Back</a>
+        </div>
+    </div>
+
+
+
 
     <div class="meal-title-and-stats">
         <div class="entry-title">
@@ -53,71 +128,79 @@
             </tr>
             <tr>
                 <th class="entry-information-name">Calories:</th>
-                <td class="entry-information-value">{{ entry.total_calories }}</td>
+                <td class="entry-information-value">{{ entry.total_calories }}cal</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Carbs:</th>
-                <td class="entry-information-value">{{ entry.total_carbs }}</td>
+                <td class="entry-information-value">{{ entry.total_carbs }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Protein:</th>
-                <td class="entry-information-value">{{ entry.total_proteins }}</td>
+                <td class="entry-information-value">{{ entry.total_proteins }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Fat:</th>
-                <td class="entry-information-value">{{ entry.total_fats }}</td>
+                <td class="entry-information-value">{{ entry.total_fats }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Saturated Fat:</th>
-                <td class="entry-information-value">{{ entry.total_saturated_fat }}</td>
+                <td class="entry-information-value">{{ entry.total_saturated_fat }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Polyunsaturated Fat:</th>
-                <td class="entry-information-value">{{ entry.total_polyunsaturated_fat }}</td>
+                <td class="entry-information-value">{{ entry.total_polyunsaturated_fat }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Monounsaturated Fat:</th>
-                <td class="entry-information-value">{{ entry.total_monounsaturated_fat }}</td>
+                <td class="entry-information-value">{{ entry.total_monounsaturated_fat }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Cholesterol:</th>
-                <td class="entry-information-value">{{ entry.total_cholesterol }}</td>
+                <td class="entry-information-value">{{ entry.total_cholesterol }}mg</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Sodium:</th>
-                <td class="entry-information-value">{{ entry.total_sodium }}</td>
+                <td class="entry-information-value">{{ entry.total_sodium }}mg</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Potassium:</th>
-                <td class="entry-information-value">{{ entry.total_potassium }}</td>
+                <td class="entry-information-value">{{ entry.total_potassium }}mg</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Fiber:</th>
-                <td class="entry-information-value">{{ entry.total_fibers }}</td>
+                <td class="entry-information-value">{{ entry.total_fibers }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Sugar:</th>
-                <td class="entry-information-value">{{ entry.total_sugar }}</td>
+                <td class="entry-information-value">{{ entry.total_sugar }}g</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Calcium:</th>
-                <td class="entry-information-value">{{ entry.total_calcium }}</td>
+                <td class="entry-information-value">{{ entry.total_calcium }}mg</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Iron:</th>
-                <td class="entry-information-value">{{ entry.total_iron }}</td>
+                <td class="entry-information-value">{{ entry.total_iron }}mg</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Vitamin A:</th>
-                <td class="entry-information-value">{{ entry.total_vitamin_a }}</td>
+                <td class="entry-information-value">{{ entry.total_vitamin_a }}mcg</td>
             </tr>
             <tr>
                 <th class="entry-information-name">Vitamin C:</th>
-                <td class="entry-information-value">{{ entry.total_vitamin_c }}</td>
+                <td class="entry-information-value">{{ entry.total_vitamin_c }}mcg</td>
             </tr>
             </tbody>
         </table>
-
+        <div class="edit-delete-section">
+            <div class="edit-button">
+                <a href="#" class="edit-btn" data-toggle="modal" data-target="#editFoodModal"
+                   data-food-id="{{ entry.pk }}">Edit</a>
+            </div>
+            <div class="edit-button">
+                <a href="{% url 'meal:delete' entry.pk %}" class="delete-btn">Delete</a>
+            </div>
+        </div>
     </div>
 
 

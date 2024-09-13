@@ -1,42 +1,35 @@
-{% extends 'core/exercises.html' %}
-
-{% block title %}Add Exercise{% endblock %}
-
-{% block main_content %}
+<head>
     {% load static %}
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
-        <title>Add Exercise</title>
-    </head>
-    <div class="form-container">
-        <form method="POST" action="?date={{ date }}">
-            {% csrf_token %}
-            <div class="form-content">
-                <div class="form-component">
-                    <label>{{ form.name.label_tag}}</label>
-                    {{ form.name }}
-                </div>
-                <div class="form-component">
-                    <label>{{ form.category.label_tag }}</label>
-                    {{ form.category }}
-                </div>
-                <div class="form-component">
-                    <label for="{{ form.duration.id_for_label }}">Duration (minutes):</label>
-                    {{ form.duration }}
-                </div>
-                <div class="form-component">
-                    <label>{{ form.burned_calories.label_tag }}</label>
-                    {{ form.burned_calories }}
-                </div>
-                <div class="form-component">
-                    <label>{{ form.notes.label_tag }}</label>
-                    {{ form.notes }}
-                </div>
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
 
-            </div>
-            <div class="form-button">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+    <title></title>
+</head>
+
+<div class="form-container">
+    <div class="entry-title">
+        <p>{{ exercise_name }}</p>
     </div>
-{% endblock %}
+    <form method="POST" id="addExerciseForm">
+        {% csrf_token %}
+        <input type="hidden" name="date" value="{{ request.GET.date }}">
+        <div class="form-content">
+            <div class="form-component">
+                <label>{{ form.category.label_tag }}</label>
+                {{ form.category }}
+            </div>
+            <div class="form-component">
+                <label for="{{ form.duration.id_for_label }}">Duration (minutes):</label>
+                {{ form.duration }}
+            </div>
+            <div class="form-component">
+                <label>{{ form.notes.label_tag }}</label>
+                {{ form.notes }}
+            </div>
+
+        </div>
+        <div class="buttons-container">
+            <button class="form-button" type="submit">Submit</button>
+        </div>
+    </form>
+</div>

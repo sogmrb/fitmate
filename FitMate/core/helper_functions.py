@@ -1,49 +1,5 @@
-import math
-
-from django.utils import timezone
+from meal.models import UserFoodEntry
 from datetime import timedelta
-
-
-def calculate_daily_needed_calories(profile):
-    weight = profile.weight
-    goal_weight = profile.goal_weight
-    height = profile.height
-    age = profile.age
-    sex = profile.sex
-    gain_or_loss_goal = profile.weekly_weight_gain_or_loss_goal
-    activity_level = profile.activity_level
-
-    tdee_factors = {'sedentary': 1.2, 'light': 1.375, 'moderate': 1.55, 'active': 1.725, 'very_active': 1.9}
-    factor = tdee_factors[activity_level]
-
-    if sex == 'male':
-        bmr = 10 * weight + 6.25 * height - 5 * age + 5
-    elif sex == 'female':
-        bmr = 10 * weight + 6.25 * height - 5 * age - 161
-    else:
-        bmr = 10 * weight + 6.25 * height - 5 * age - 78  # average of both
-
-    tdee = math.ceil(bmr * factor)
-
-    if goal_weight < weight:
-        weekly_deficit = gain_or_loss_goal * 7716
-        daily_deficit = math.ceil(weekly_deficit / 7)
-        print(tdee)
-        print(daily_deficit)
-        print(tdee - daily_deficit)
-        daily_intake = max(1200, tdee - daily_deficit)
-        number_of_days_until_goal = math.ceil((weight - goal_weight) / gain_or_loss_goal)
-        print(daily_intake)
-        return daily_intake, number_of_days_until_goal
-    if goal_weight > weight:
-        weekly_surplus = gain_or_loss_goal * 7716
-        daily_surplus = math.ceil(weekly_surplus / 7)
-        daily_intake = tdee + daily_surplus
-        number_of_days_until_goal = math.ceil((goal_weight - weight) / gain_or_loss_goal)
-        print(daily_intake)
-        return daily_intake, number_of_days_until_goal
-    else:
-        return tdee, 0
 
 
 def total_daily_stats(user_entries):
@@ -129,28 +85,36 @@ def carb_fat_protein_ratio(total_calories, goal, activity_level):
     return carbs_in_gram, protein_in_gram, fat_in_gram
 
 
-def streak_days(user_entries):
+def total_daily_burned(entries):
+    burned = 0
+    minutes = 0
+    for entry in entries:
+        burned += entry.burned_calories
+        minutes += entry.duration
+
+    return burned, minutes
+
+
+def calculate_burned_calories(weight, MET_value, duration):
+    return (duration * MET_value * weight) / 200
+
+
+def streak_days(user, date):
+    user_entries = UserFoodEntry.objects.filter(user=user, date__lte=date).order_by('-date')
     if not user_entries:
         return 0
-    current_day = timezone.now().date()
+    current_day = date
     if user_entries[0].date != current_day:
         return 0
-    streak_days = 1
+    streakDays = 1
     prev_date = current_day - timedelta(days=1)
     for i in range(1, len(user_entries)):
         if user_entries[i].date == current_day:
             continue
         elif user_entries[i].date == prev_date:
-            streak_days += 1
+            streakDays += 1
             current_day = prev_date
             prev_date = current_day - timedelta(days=1)
         else:
             break
-    return streak_days
-
-def total_daily_burned(entries):
-    burned = 0
-    for entry in entries:
-        burned += entry.burned_calories
-
-    return burned
+    return streakDays

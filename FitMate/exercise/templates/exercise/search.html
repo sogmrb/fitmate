@@ -1,0 +1,22 @@
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
+
+    <title></title>
+</head>
+
+<div class="search-form">
+    <form id="searchExerciseForm" method="GET" action="">
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" name="query" placeholder="Search for an exercise...">
+                <input type="hidden" name="date" value="{{ request.GET.date }}">
+            </div>
+            <div class="search-icon-div">
+                <button class="search-icon-button" type="submit">&#128269;</button>
+            </div>
+        </div>
+    </form>
+
+</div>

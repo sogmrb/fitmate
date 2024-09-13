@@ -12,8 +12,3 @@ class UserFoodEntryForm(ModelForm):
             "quantity",
             "meal_time",
         )
-
-
-class FoodSearchForm(Form):
-    query = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Search any food item...'}))
-

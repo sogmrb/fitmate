@@ -1,0 +1,56 @@
+2024-08-26 11:02:04.828 +03 [9013] FATAL:  lock file "postmaster.pid" already exists
+2024-08-26 11:02:04.828 +03 [9013] HINT:  Is another postmaster (PID 9001) running in data directory "/usr/local/var/postgresql@14"?
+2024-09-03 10:09:52.831 +03 [4325] LOG:  starting PostgreSQL 14.13 (Homebrew) on x86_64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-09-03 10:09:52.834 +03 [4325] LOG:  listening on IPv6 address "::1", port 5432
+2024-09-03 10:09:52.834 +03 [4325] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-09-03 10:09:52.836 +03 [4325] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-09-03 10:09:52.845 +03 [4326] LOG:  database system was shut down at 2024-09-03 10:09:41 +03
+2024-09-03 10:09:52.857 +03 [4325] LOG:  database system is ready to accept connections
+2024-09-03 10:10:05.286 +03 [4383] FATAL:  role "myuser" does not exist
+2024-09-03 10:12:10.505 +03 [4653] FATAL:  database "blake" does not exist
+2024-09-03 10:14:22.683 +03 [4792] ERROR:  database "fitmatedb" does not exist
+2024-09-03 10:14:22.683 +03 [4792] STATEMENT:  GRANT ALL PRIVILEGES ON DATABASE fitmatedb TO myuser;
+2024-09-03 11:22:33.570 +03 [10780] ERROR:  column user_profile.weeks_until_goal_reached does not exist at character 394
+2024-09-03 11:22:33.570 +03 [10780] STATEMENT:  SELECT "user_profile"."id", "user_profile"."name", "user_profile"."goal", "user_profile"."activity_level", "user_profile"."sex", "user_profile"."weight", "user_profile"."goal_weight", "user_profile"."height", "user_profile"."age", "user_profile"."user_id", "user_profile"."daily_needed_calories", "user_profile"."daily_goal_calories_to_burn", "user_profile"."weekly_weight_gain_or_loss_goal", "user_profile"."weeks_until_goal_reached", "user_profile"."calorie_warning" FROM "user_profile" WHERE "user_profile"."user_id" = 2 LIMIT 21
+2024-09-03 11:22:33.596 +03 [10780] ERROR:  column user_profile.weeks_until_goal_reached does not exist at character 394
+2024-09-03 11:22:33.596 +03 [10780] STATEMENT:  SELECT "user_profile"."id", "user_profile"."name", "user_profile"."goal", "user_profile"."activity_level", "user_profile"."sex", "user_profile"."weight", "user_profile"."goal_weight", "user_profile"."height", "user_profile"."age", "user_profile"."user_id", "user_profile"."daily_needed_calories", "user_profile"."daily_goal_calories_to_burn", "user_profile"."weekly_weight_gain_or_loss_goal", "user_profile"."weeks_until_goal_reached", "user_profile"."calorie_warning" FROM "user_profile" LIMIT 21
+2024-09-03 11:22:33.598 +03 [10780] ERROR:  column user_profile.weeks_until_goal_reached does not exist at character 394
+2024-09-03 11:22:33.598 +03 [10780] STATEMENT:  SELECT "user_profile"."id", "user_profile"."name", "user_profile"."goal", "user_profile"."activity_level", "user_profile"."sex", "user_profile"."weight", "user_profile"."goal_weight", "user_profile"."height", "user_profile"."age", "user_profile"."user_id", "user_profile"."daily_needed_calories", "user_profile"."daily_goal_calories_to_burn", "user_profile"."weekly_weight_gain_or_loss_goal", "user_profile"."weeks_until_goal_reached", "user_profile"."calorie_warning" FROM "user_profile" WHERE "user_profile"."user_id" = 2 LIMIT 21
+2024-09-03 11:22:33.599 +03 [10780] ERROR:  column user_profile.weeks_until_goal_reached does not exist at character 394
+2024-09-03 11:22:33.599 +03 [10780] STATEMENT:  SELECT "user_profile"."id", "user_profile"."name", "user_profile"."goal", "user_profile"."activity_level", "user_profile"."sex", "user_profile"."weight", "user_profile"."goal_weight", "user_profile"."height", "user_profile"."age", "user_profile"."user_id", "user_profile"."daily_needed_calories", "user_profile"."daily_goal_calories_to_burn", "user_profile"."weekly_weight_gain_or_loss_goal", "user_profile"."weeks_until_goal_reached", "user_profile"."calorie_warning" FROM "user_profile" WHERE "user_profile"."user_id" = 2 LIMIT 21
+2024-09-03 11:22:33.600 +03 [10780] ERROR:  column user_profile.weeks_until_goal_reached does not exist at character 394
+2024-09-03 11:22:33.600 +03 [10780] STATEMENT:  SELECT "user_profile"."id", "user_profile"."name", "user_profile"."goal", "user_profile"."activity_level", "user_profile"."sex", "user_profile"."weight", "user_profile"."goal_weight", "user_profile"."height", "user_profile"."age", "user_profile"."user_id", "user_profile"."daily_needed_calories", "user_profile"."daily_goal_calories_to_burn", "user_profile"."weekly_weight_gain_or_loss_goal", "user_profile"."weeks_until_goal_reached", "user_profile"."calorie_warning" FROM "user_profile" WHERE "user_profile"."user_id" = 2 LIMIT 21
+2024-09-03 11:22:33.601 +03 [10780] ERROR:  column user_profile.weeks_until_goal_reached does not exist at character 394
+2024-09-03 11:22:33.601 +03 [10780] STATEMENT:  SELECT "user_profile"."id", "user_profile"."name", "user_profile"."goal", "user_profile"."activity_level", "user_profile"."sex", "user_profile"."weight", "user_profile"."goal_weight", "user_profile"."height", "user_profile"."age", "user_profile"."user_id", "user_profile"."daily_needed_calories", "user_profile"."daily_goal_calories_to_burn", "user_profile"."weekly_weight_gain_or_loss_goal", "user_profile"."weeks_until_goal_reached", "user_profile"."calorie_warning" FROM "user_profile" WHERE "user_profile"."user_id" = 2 LIMIT 21
+2024-09-06 15:15:10.500 +03 [57483] ERROR:  column "exercise_id" of relation "exercise_userexerciseentry" contains null values
+2024-09-06 15:15:10.500 +03 [57483] STATEMENT:  ALTER TABLE "exercise_userexerciseentry" ADD COLUMN "exercise_id" bigint NOT NULL CONSTRAINT "exercise_userexercis_exercise_id_5ca7db8b_fk_exercise_" REFERENCES "exercise_exercise"("id") DEFERRABLE INITIALLY DEFERRED; SET CONSTRAINTS "exercise_userexercis_exercise_id_5ca7db8b_fk_exercise_" IMMEDIATE
+2024-09-06 15:18:21.559 +03 [57665] ERROR:  column "exercise_id" of relation "exercise_userexerciseentry" contains null values
+2024-09-06 15:18:21.559 +03 [57665] STATEMENT:  ALTER TABLE "exercise_userexerciseentry" ADD COLUMN "exercise_id" bigint NOT NULL CONSTRAINT "exercise_userexercis_exercise_id_5ca7db8b_fk_exercise_" REFERENCES "exercise_exercise"("id") DEFERRABLE INITIALLY DEFERRED; SET CONSTRAINTS "exercise_userexercis_exercise_id_5ca7db8b_fk_exercise_" IMMEDIATE
+2024-09-06 15:18:36.354 +03 [57724] ERROR:  column "exercise_id" of relation "exercise_userexerciseentry" contains null values
+2024-09-06 15:18:36.354 +03 [57724] STATEMENT:  ALTER TABLE "exercise_userexerciseentry" ADD COLUMN "exercise_id" bigint NOT NULL CONSTRAINT "exercise_userexercis_exercise_id_5ca7db8b_fk_exercise_" REFERENCES "exercise_exercise"("id") DEFERRABLE INITIALLY DEFERRED; SET CONSTRAINTS "exercise_userexercis_exercise_id_5ca7db8b_fk_exercise_" IMMEDIATE
+2024-09-06 15:19:45.814 +03 [57787] ERROR:  column exercise_userexerciseentry.exercise_id does not exist at character 80
+2024-09-06 15:19:45.814 +03 [57787] STATEMENT:  SELECT "exercise_userexerciseentry"."id", "exercise_userexerciseentry"."name", "exercise_userexerciseentry"."exercise_id", "exercise_userexerciseentry"."category", "exercise_userexerciseentry"."user_id", "exercise_userexerciseentry"."duration", "exercise_userexerciseentry"."burned_calories", "exercise_userexerciseentry"."date", "exercise_userexerciseentry"."notes" FROM "exercise_userexerciseentry" ORDER BY "exercise_userexerciseentry"."date" ASC, "exercise_userexerciseentry"."id" DESC
+2024-09-06 15:19:45.844 +03 [57787] ERROR:  column exercise_userexerciseentry.exercise_id does not exist at character 80
+2024-09-06 15:19:45.844 +03 [57787] STATEMENT:  SELECT "exercise_userexerciseentry"."id", "exercise_userexerciseentry"."name", "exercise_userexerciseentry"."exercise_id", "exercise_userexerciseentry"."category", "exercise_userexerciseentry"."user_id", "exercise_userexerciseentry"."duration", "exercise_userexerciseentry"."burned_calories", "exercise_userexerciseentry"."date", "exercise_userexerciseentry"."notes" FROM "exercise_userexerciseentry" ORDER BY "exercise_userexerciseentry"."date" ASC, "exercise_userexerciseentry"."id" DESC LIMIT 21
+2024-09-06 15:19:45.845 +03 [57787] ERROR:  column exercise_userexerciseentry.exercise_id does not exist at character 80
+2024-09-06 15:19:45.845 +03 [57787] STATEMENT:  SELECT "exercise_userexerciseentry"."id", "exercise_userexerciseentry"."name", "exercise_userexerciseentry"."exercise_id", "exercise_userexerciseentry"."category", "exercise_userexerciseentry"."user_id", "exercise_userexerciseentry"."duration", "exercise_userexerciseentry"."burned_calories", "exercise_userexerciseentry"."date", "exercise_userexerciseentry"."notes" FROM "exercise_userexerciseentry" ORDER BY "exercise_userexerciseentry"."date" ASC, "exercise_userexerciseentry"."id" DESC LIMIT 21
+2024-09-06 15:19:45.846 +03 [57787] ERROR:  column exercise_userexerciseentry.exercise_id does not exist at character 80
+2024-09-06 15:19:45.846 +03 [57787] STATEMENT:  SELECT "exercise_userexerciseentry"."id", "exercise_userexerciseentry"."name", "exercise_userexerciseentry"."exercise_id", "exercise_userexerciseentry"."category", "exercise_userexerciseentry"."user_id", "exercise_userexerciseentry"."duration", "exercise_userexerciseentry"."burned_calories", "exercise_userexerciseentry"."date", "exercise_userexerciseentry"."notes" FROM "exercise_userexerciseentry" ORDER BY "exercise_userexerciseentry"."date" ASC, "exercise_userexerciseentry"."id" DESC LIMIT 21
+2024-09-06 15:20:44.569 +03 [57823] ERROR:  relation "exercise_userexerciseentry" does not exist
+2024-09-06 15:20:44.569 +03 [57823] STATEMENT:  ALTER TABLE exercise_userexerciseentry ALTER COLUMN exercise_id DROP NOT NULL;
+2024-09-06 15:21:08.476 +03 [57855] FATAL:  database "blake" does not exist
+2024-09-06 15:21:17.713 +03 [57882] FATAL:  role "fitmatedb" does not exist
+2024-09-06 15:21:37.756 +03 [57913] ERROR:  column "exercise_id" of relation "exercise_userexerciseentry" does not exist
+2024-09-06 15:21:37.756 +03 [57913] STATEMENT:  ALTER TABLE exercise_userexerciseentry ALTER COLUMN exercise_id DROP NOT NULL;
+2024-09-06 15:21:53.900 +03 [57913] ERROR:  syntax error at or near "exercise_userexerciseentry" at character 1
+2024-09-06 15:21:53.900 +03 [57913] STATEMENT:  exercise_userexerciseentry
+	;
+2024-09-06 15:22:30.970 +03 [57913] ERROR:  syntax error at or near "*" at character 8
+2024-09-06 15:22:30.970 +03 [57913] STATEMENT:  delete * from exercise_userexerciseentry
+	select * from exercise_userexerciseentry;
+2024-09-06 15:22:43.145 +03 [57913] ERROR:  syntax error at or near "*" at character 8
+2024-09-06 15:22:43.145 +03 [57913] STATEMENT:  delete * from exercise_userexerciseentry;
+2024-09-06 15:22:56.233 +03 [57913] ERROR:  syntax error at or near "*" at character 6
+2024-09-06 15:22:56.233 +03 [57913] STATEMENT:  drop * from exercise_userexerciseentry;
+2024-09-06 15:23:10.043 +03 [57913] ERROR:  syntax error at or near "*" at character 8
+2024-09-06 15:23:10.043 +03 [57913] STATEMENT:  delete * from exercise_userexerciseentry;

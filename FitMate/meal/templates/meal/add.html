@@ -1,37 +1,30 @@
-{% extends 'core/meals.html' %}
-
-{% block title %}Add Food{% endblock %}
-
-{% block main_content %}
+<head>
     {% load static %}
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
-        <title>Add Food</title>
-    </head>
-    <div class="form-container">
-        <div class="entry-title">
-            <p>{{ food_name }}</p>
-        </div>
-        <form method="POST" action="?date={{ date }}">
-            {% csrf_token %}
-            <div class="form-content">
-                <div class="form-component">
-                    <label>{{ form.quantity.label_tag }}</label>
-                    {{ form.quantity }}
-                </div>
-                <div class="form-component">
-                    <label>{{ form.meal_time.label_tag }}</label>
-                    {{ form.meal_time }}
-                </div>
-                <div class="form-component">
-                    <label for="{{ form.serving.label_tag }}"></label>
-                    {{ form.serving }}
-                </div>
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
 
+    <title></title>
+</head>
+
+<!-- meal/add.html -->
+<div class="form-container">
+    <form method="POST" id="addFoodForm">
+        {% csrf_token %}
+        <div class="form-content">
+            <input type="hidden" name="date" value="{{ request.GET.date }}">
+            <div class="form-component">
+                <label>{{ form.quantity.label_tag }}</label>
+                {{ form.quantity }}
             </div>
-            <div class="form-button">
-                <button type="submit">Submit</button>
+            <div class="form-component">
+                <label>{{ form.meal_time.label_tag }}</label>
+                {{ form.meal_time }}
             </div>
-        </form>
-    </div>
-{% endblock %}
+            <div class="form-component">
+                <label for="{{ form.serving.id_for_label }}">{{ form.serving.label_tag }}</label>
+                {{ form.serving }}
+            </div>
+        </div>
+        <button type="submit" class="form-button">Submit</button>
+    </form>
+</div>

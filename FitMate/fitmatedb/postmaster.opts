@@ -1,0 +1,1 @@
+/usr/local/Cellar/postgresql@14/14.13/bin/postgres "-D" "fitmatedb"

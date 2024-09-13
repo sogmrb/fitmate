@@ -1,4 +1,4 @@
- {% extends 'core/base.html' %}
+{% extends 'core/base.html' %}
 
 {% block title %}{% endblock %}
 {% block content %}
@@ -9,32 +9,36 @@
     <div>
         <a class="login-button" href="{% url "user:register" %}">SIGN UP</a>
     </div>
-    <div class="main-container">
+    <div class="login-body">
+        <div class="main-container">
 
-        <form class="form-with-validation" method="post" action="{% url 'user:my_login' %}">
-            {% csrf_token %}
-            <div class="login-form">
+            <form class="form-container" method="post" action="{% url 'user:my_login' %}">
+                {% csrf_token %}
+                <div class="login-form">
+                    <input type="hidden" name="redirect_to" value="{{ redirect_to }}">
 
-                <div class="name-box">
-                    {{ form.username }}
-                </div>
-
-                <div class="name-box">
-                    {{ form.password }}
-                </div>
-
-                {% if form.non_field_errors %}
-                    <div class="form-error">
-                        {% for error in form.non_field_errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
+                    <div class="name-box">
+                        {{ form.username }}
                     </div>
-                {% endif %}
-             <div class="buttons-container">
-               <button class="login-form-button">LOG IN</button>
-            </div>
 
-            </div>
-        </form>
+                    <div class="name-box">
+                        {{ form.password }}
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="form-error">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="buttons-container">
+                        <button class="login-form-button">LOG IN</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
     </div>
+
 {% endblock %}

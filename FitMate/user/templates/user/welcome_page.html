@@ -9,7 +9,7 @@
         <a class="login-button" href="{% url "user:my_login" %}">LOG IN</a>
     </div>
     <div class="form-container">
-        <form method="POST" action=".">
+        <form method="POST" action="." id="main-form">
             {% csrf_token %}
             <!-- welcome section -->
             <section class="welcome__page welcome__page--welcome welcome__page--active">
@@ -36,7 +36,11 @@
                     <div class="name-form">
                         <div class="name-box">
                             {{ profile_form.name }}
+                            <div class="form-error" id="name-error">
+                                {{ profile_form.name.errors }}
+                            </div>
                         </div>
+
 
                         <div class="buttons-container">
                             <button type="button" class="form__button" onclick="showPrevSection()">
@@ -64,6 +68,9 @@
                                         for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
                                 </div>
                             {% endfor %}
+                            <div class="form-error" id="goal-error">
+                                {{ profile_form.goal.errors }}
+                            </div>
                         </div>
                         <div class="buttons-container">
                             <button type="button" class="form__button"
@@ -91,6 +98,10 @@
                                         for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
                                 </div>
                             {% endfor %}
+
+                        </div>
+                        <div class="form-error" id="activity-error">
+                            {{ profile_form.activity_level.errors }}
                         </div>
                         <div class="buttons-container">
                             <button type="button" class="form__button"
@@ -120,11 +131,26 @@
                                 </div>
                             {% endfor %}
                         </div>
+                        <div class="form-error" id="sex-error">
+                            {{ profile_form.sex.errors }}
+                        </div>
                         <div class="age-h-w-container">
                             {{ profile_form.age }}
+                            <div class="form-error form-error-small" id="age-error">
+                                {{ profile_form.age.errors }}
+                            </div>
                             {{ profile_form.height }}
+                            <div class="form-error form-error-small" id="height-error">
+                                {{ profile_form.height.errors }}
+                            </div>
                             {{ profile_form.weight }}
+                            <div class="form-error form-error-small" id="weight-error">
+                                {{ profile_form.weight.errors }}
+                            </div>
                             {{ profile_form.goal_weight }}
+                            <div class="form-error form-error-small" id="goal-weight-error">
+                                {{ profile_form.goal_weight.errors }}
+                            </div>
                         </div>
 
                         <div class="buttons-container">
@@ -148,12 +174,12 @@
                                 <label>{{ field.label_tag }}</label>
                                 {{ field }}
                                 <span class="form-help-text">{{ field.help_text }}</span>
-                                <div class="form-error">
+                                <div class="form-error" id="error-{{ field.name }}">
                                     {{ field.errors }}
                                 </div>
                             </div>
                         {% endfor %}
-                        <div class="form-error">
+                        <div class="form-error form-error-small" id="non-field-errors">
                             {% for error in form.non_field_errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
@@ -164,7 +190,7 @@
                         <button type="button" class="form__button" onclick="showPrevSection()">
                             Back
                         </button>
-                        <button type="submit" class="form__button">Sign Up</button>
+                        <button type="button" class="form__button" onclick="submitSignupForm()">Sign Up</button>
                     </div>
                 </div>
             </section>
@@ -173,50 +199,186 @@
 
     <script>
         let sectionIdx = 0;
+        let goal_gain = false;
+        let goal_lose = false;
         const sections = document.querySelectorAll('.welcome__page');
 
         function showNextSection() {
-
-            if (formIsValid(sections[sectionIdx])) {
+            const section = sections[sectionIdx];
+            section.querySelectorAll('.form-error').forEach(error => {
+                error.innerHTML = '';
+            });
+            if (sectionIdx === 0) {
                 sections[sectionIdx].style.display = 'none';
                 sectionIdx++;
-                sections[sectionIdx].style.display = 'block';
+                sections[sectionIdx].style.display = 'flex';
+            } else if (sectionIdx === 1) {
+                const input = section.querySelector('input[name="name"]');
+                const value = input.value.trim()
+                if (!value) {
+                    const error_field = section.querySelector('#name-error');
+                    error_field.innerHTML = 'Please enter your name.'
+                } else {
+                    sections[sectionIdx].style.display = 'none';
+                    sectionIdx++;
+                    sections[sectionIdx].style.display = 'flex';
+                }
+            } else if (sectionIdx === 2) {
+                const input = section.querySelector('input[name="goal"]:checked');
+                if (!input) {
+                    const error_field = section.querySelector('#goal-error');
+                    error_field.innerHTML = 'Please select a goal.'
+                } else {
+                    if (input.value === 'weight_loss'){
+                        goal_lose = true;
+                    }
+                    else if (input.value === 'muscle_gain'){
+                        goal_gain = true;
+                    }
+                    sections[sectionIdx].style.display = 'none';
+                    sectionIdx++;
+                    sections[sectionIdx].style.display = 'flex';
+                }
+            } else if (sectionIdx === 3) {
+                const input = section.querySelector('input[name="activity_level"]:checked');
+                if (!input) {
+                    const error_field = section.querySelector('#activity-error');
+                    error_field.innerHTML = 'Please select an activity level.'
+                } else {
+                    sections[sectionIdx].style.display = 'none';
+                    sectionIdx++;
+                    sections[sectionIdx].style.display = 'flex';
+                }
+            } else if (sectionIdx === 4) {
+                let valid = true;
+                const sex_input = section.querySelector('input[name="sex"]:checked');
+
+                const age_input = section.querySelector('input[name="age"]');
+                const age_value = Number(age_input.value.trim())
+
+                const height_input = section.querySelector('input[name="height"]');
+                const height_value = Number(height_input.value.trim())
+
+                const weight_input = section.querySelector('input[name="weight"]');
+                const weight_value = Number(weight_input.value.trim())
+
+                const goal_weight_input = section.querySelector('input[name="goal_weight"]');
+                const goal_weight_value = Number(goal_weight_input.value.trim())
+                if (!sex_input) {
+                    const error_field = section.querySelector('#sex-error');
+                    error_field.innerHTML = 'Please select your sex.'
+                }
+
+                if (!age_value) {
+                    const error_field = section.querySelector('#age-error');
+                    error_field.innerHTML = 'Please enter your age.';
+                    valid = false
+                } else if (age_value < 0) {
+                    const error_field = section.querySelector('#age-error');
+                    error_field.innerHTML = 'Please enter a valid age.';
+                    valid = false;
+                } else if (age_value < 16) {
+                    const error_field = section.querySelector('#age-error');
+                    error_field.innerHTML = 'You must be at least 16 to use this website.';
+                    valid = false;
+                }
+                if (height_value < 0) {
+                    const error_field = section.querySelector('#height-error');
+                    error_field.innerHTML = "Please enter a valid height.";
+                    valid = false;
+                } else if (height_value < 130 || height_value > 230) {
+                    const error_field = section.querySelector('#height-error');
+                    error_field.innerHTML = "Height must be between 130cm and 230cm.";
+                    valid = false;
+                }
+                if (weight_value < 0) {
+                    const error_field = section.querySelector('#weight-error');
+                    error_field.innerHTML = "Please enter a valid weight.";
+                    valid = false;
+                } else if (weight_value < 30 || height_value > 300) {
+                    const error_field = section.querySelector('#weight-error');
+                    error_field.innerHTML = "Weight must be between 30kg and 300kg.";
+                    valid = false;
+                }
+
+                if (goal_weight_value < 0) {
+                    const error_field = section.querySelector('#goal-weight-error');
+                    error_field.innerHTML = "Please enter a valid goal weight.";
+                    valid = false;
+                } else if (goal_weight_value < 30 || height_value > 300) {
+                    const error_field = section.querySelector('#goal-weight-error');
+                    error_field.innerHTML = "Goal weight must be between 30kg and 300kg.";
+                    valid = false;
+                }
+
+                if (goal_lose && weight_value <= goal_weight_value){
+                    const error_field = section.querySelector('#goal-weight-error');
+                    error_field.innerHTML = "If your goal is weight loss, goal weight must be less than current weight.";
+                    valid = false;
+
+                }
+                else if (goal_gain && weight_value >= goal_weight_value){
+                    const error_field = section.querySelector('#goal-weight-error');
+                    error_field.innerHTML = "If your goal is muscle gain, goal weight must be greater than current weight.";
+                    valid = false;
+
+                }
+
+
+                if (valid) {
+                    sections[sectionIdx].style.display = 'none';
+                    sectionIdx++;
+                    sections[sectionIdx].style.display = 'flex';
+                }
             }
+
 
         }
 
         function showPrevSection() {
+            const section = sections[sectionIdx];
+            section.querySelectorAll('.form-error').forEach(error => {
+                error.innerHTML = '';
+            });
             sections[sectionIdx].style.display = 'none';
             sectionIdx--;
-            sections[sectionIdx].style.display = 'block';
+            sections[sectionIdx].style.display = 'flex';
         }
 
-        function formIsValid(section) {
-            let inputs = section.querySelectorAll('input');
-            if (!inputs) return true;
 
-            let radioIsChecked = false;
+        function submitSignupForm() {
+            const form = document.querySelector('#main-form');
+            const formData = new FormData(form);
 
-            for (let input of inputs) {
-                if (input.type === 'text' || input.type === 'number') {
-                    const value = input.value.trim()
-                    if (!value) {
-                        alert("Please fill the form.")
-                        return false;
-                    }
+            document.querySelectorAll('.form-error').forEach(error => {
+                error.innerHTML = '';
+            });
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
                 }
-
-                if (input.type === 'radio') {
-                    if (input.checked) {
-                        radioIsChecked = true
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        for (const [field, errors] of Object.entries(data.errors)) {
+                            const errorDiv = document.getElementById(`error-${field}`);
+                            if (errorDiv) {
+                                errorDiv.innerHTML = errors.join('<br>');
+                            }
+                        }
+                        if (data.non_field_errors) {
+                            const nonFieldErrorDiv = document.getElementById('non-field-errors');
+                            nonFieldErrorDiv.innerHTML = data.non_field_errors.join('<br>');
+                        }
                     }
-                }
-            }
-            if (section.querySelector('input[type=radio]') && !radioIsChecked) {
-                alert("Please select an option.");
-                return false;
-            }
-            return true;
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 

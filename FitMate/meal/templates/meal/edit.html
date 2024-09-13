@@ -1,23 +1,36 @@
-{% extends 'core/meals.html' %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
 
-{% block title %}Edit entry{% endblock %}
+    <title></title>
+</head>
 
-{% block main_content %}
-    <div class="form-container">
-        <div class="entry-title">
-            <p>{{ food_name }}</p>
-        </div>
-        <form method="POST" action=".">
-            {% csrf_token %}
-            <div class="form-content">
-                <span class="form-label">{{ form.quantity.label_tag }}</span> <span
-                    class="form-input">{{ form.quantity }}</span>
-                {{ form.meal_time.label_tag }} {{ form.meal_time }}
-                {{ form.serving.label_tag }} {{ form.serving }}
-            </div>
-            <div class="form-button">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+
+<div class="form-container">
+    <div class="entry-title">
+        <p>{{ food_entry.food_name }}</p>
     </div>
-{% endblock %}
+    <form method="POST" id="editFoodForm">
+        {% csrf_token %}
+        <div class="form-content">
+            <input type="hidden" name="date" value="{{ request.GET.date }}">
+            <div class="form-component">
+                <label>{{ form.quantity.label_tag }}</label>
+                {{ form.quantity }}
+            </div>
+            <div class="form-component">
+                <label>{{ form.meal_time.label_tag }}</label>
+                {{ form.meal_time }}
+            </div>
+            <div class="form-component">
+                <label for="{{ form.serving.id_for_label }}">{{ form.serving.label_tag }}</label>
+                {{ form.serving }}
+            </div>
+        </div>
+        <div class="buttons-container">
+            <button class="form-button" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+

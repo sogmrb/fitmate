@@ -1,80 +1,24 @@
+
+from django.urls import NoReverseMatch, reverse
+from django.utils import timezone
+
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
 
 from .forms import ProfileInfoForm, CreateAccountForm, MyLoginForm
+from .models import WeightHistory
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import auth
 
-from core.helper_functions import calculate_daily_needed_calories
-
-
-# class WelcomeView(View):
-#     def get(self, request, *args, **kwargs):
-#         return render(request, 'user/welcome_page.html')
-#
-#
-# class NameView(View):
-#     def get(self, request, *args, **kwargs):
-#         form = NameForm()
-#         return render(request, 'user/get_name.html',
-#                       {'form': form,
-#                        })
-#
-#     def post(self, request, *args, **kwargs):
-#         form = NameForm(request.POST)
-#         if form.is_valid():
-#             request.session['name'] = form.cleaned_data['name']
-#             return redirect('user:goals')
-#         print(request.session['name'])
-#         return render(request, 'user/get_name.html', {'form': form})
-#
-#
-# class GoalsView(View):
-#     def get(self, request, *args, **kwargs):
-#         form = GoalsForm()
-#         return render(request, 'user/goals.html', {'form': form})
-#
-#     def post(self, request, *args, **kwargs):
-#         form = GoalsForm(request.POST)
-#         if form.is_valid():
-#             request.session['goal'] = form.cleaned_data['goal']
-#             return redirect('user:activity_level')
-#         return render(request, 'user/goals.html', {'form': form})
-#
-#
-# class ActivityLevelView(View):
-#     def get(self, request, *args, **kwargs):
-#         form = ActivityForm()
-#         return render(request, 'user/activity_level.html', {'form': form})
-#
-#     def post(self, request, *args, **kwargs):
-#         form = ActivityForm(request.POST)
-#         if form.is_valid():
-#             request.session['activity_level'] = form.cleaned_data['activity_level']
-#             return redirect('user:profile_info')
-#         return render(request, 'user/activity_level.html', {'form': form})
-#
-#
-# class ProfileInfoView(View):
-#     def get(self, request, *args, **kwargs):
-#         form = ProfileInfoForm()
-#         return render(request, 'user/profile_info.html', {'form': form})
-#
-#     def post(self, request, *args, **kwargs):
-#         form = ProfileInfoForm(request.POST)
-#         if form.is_valid():
-#             request.session['sex'] = form.cleaned_data['sex']
-#             request.session['age'] = form.cleaned_data['age']
-#             request.session['height'] = form.cleaned_data['height']
-#             request.session['weight'] = form.cleaned_data['weight']
-#             request.session['goal_weight'] = form.cleaned_data['goal_weight']
-#
-#             return redirect('user:register')
-#         return render(request, 'user/profile_info.html', {'form': form})
-
 
 class RegisterView(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('core:dashboard')
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         profile_form = ProfileInfoForm()
         account_form = CreateAccountForm()
@@ -86,19 +30,26 @@ class RegisterView(View):
     def post(self, request, *args, **kwargs):
         profile_form = ProfileInfoForm(request.POST)
         account_form = CreateAccountForm(request.POST)
-        print(profile_form.is_valid())
-        print(account_form.is_valid())
-        if profile_form.is_valid() and account_form.is_valid():
-            user = account_form.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.daily_needed_calories, profile.days_until_goal_reached = calculate_daily_needed_calories(profile)
+        if profile_form.is_valid():
+            if account_form.is_valid():
+                user = account_form.save()
+                profile = profile_form.save(commit=False)
+                if profile.goal not in ['weight_loss', 'muscle_gain']:
+                    profile.weekly_weight_gain_or_loss_goal = 0
+                profile.user = user
+                profile.save()
+                date = timezone.now().date()
+                WeightHistory.objects.create(profile=profile, date_logged=date, weight=profile.weight)
 
-            profile.save()
+                login(request, user)
+                return JsonResponse({'success': True, 'redirect_url': reverse('core:dashboard')})
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'errors': account_form.errors,
+                    'non_field_errors': account_form.non_field_errors(),
+                })
 
-            login(request, user)
-
-            return redirect('core:dashboard')
         return render(request, 'user/welcome_page.html', {
             'profile_form': profile_form,
             'account_form': account_form
@@ -106,10 +57,15 @@ class RegisterView(View):
 
 
 class MyLoginView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('core:dashboard')
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         form = MyLoginForm()
-        return render(request, 'user/login.html', {"form": form})
+        redirect_to = request.GET.get('redirect_to', None)
+        return render(request, 'user/login.html', {"form": form, "redirect_to": redirect_to})
 
     def post(self, request, *args, **kwargs):
         form = MyLoginForm(request, data=request.POST)
@@ -119,8 +75,16 @@ class MyLoginView(View):
             password = request.POST.get('password')
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                redirect_to = request.POST.get('redirect_to', None)
+                print(redirect_to)
                 auth.login(request, user)
-                return redirect("core:dashboard")
+                if redirect_to:
+                    try:
+                        return redirect(redirect_to)
+                    except NoReverseMatch:
+                        return redirect("core:dashboard")
+                else:
+                    return redirect("core:dashboard")
             else:
                 form.add_error(None, "Invalid username or password")
 
@@ -130,7 +94,5 @@ class MyLoginView(View):
 class LogoutView(View):
 
     def get(self, request, *args, **kwargs):
-        print("Before logout:", request.session.items())
         logout(request)
-        print("After logout:", request.session.items())
         return redirect("user:my_login")

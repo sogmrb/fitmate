@@ -5,10 +5,415 @@
     {% load static %}
     <head>
         <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/styles.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'meal/css/styles.css' %}">
+        <script
+                src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        </script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+                crossorigin="anonymous"></script>
+
         <title>Index</title>
     </head>
 
-    <div class="navbar">
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Food Modal -->
+    <div class="modal fade" id="searchFoodModal" tabindex="-1" aria-labelledby="searchFoodModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchFoodModalLabel">Search Food</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <div id="loadingSpinner" class="text-center">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Food Modal -->
+    <div class="modal fade" id="addFoodModal" tabindex="-1" aria-labelledby="addFoodModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-custom modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addFoodModalLabel">Add Food Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#searchFoodModal').on('show.bs.modal', function (event) {
+                const modal = $(this);
+                $.ajax({
+                    url: "{% url 'meal:search' %}",
+                    type: "GET",
+                    data: {
+                        date: "{{ date | date:"Y-m-d" }}"
+                    },
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                        $('#searchFoodForm').on('submit', function (event) {
+                            event.preventDefault();
+                            modal.find('#loadingSpinner').show();
+                            const query = $('input[name="query"]').val();
+                            const date = $('input[name="date"]').val();
+
+                            console.log(query)
+
+                            $.ajax({
+                                url: "{% url 'meal:search' %}",
+                                type: "GET",
+                                data: {
+                                    query: query,
+                                    date: date
+                                },
+                                success: function (response) {
+                                    modal.find('#loadingSpinner').hide();
+                                    if (response.success) {
+
+                                        console.log(response.results);
+                                        const results = response.results;
+                                        const resultsContainer = $('<div class="search-results-section"></div>');
+                                        resultsContainer.empty();
+                                        if (results.length !== 0) {
+                                            results.forEach(function (item) {
+                                                const resultItem = `
+                                                <div class="search-result-item">
+                                                    <a href="#" class="open-add-modal" data-food-id="${item.id}" data-date="${date}">
+                                                        ${item.name}
+                                                    </a>
+                                                </div>
+                                            `;
+                                                resultsContainer.append(resultItem);
+                                            });
+                                            $('.search-results-section').remove();
+                                            $('#searchFoodForm').after(resultsContainer);
+
+                                            $('.open-add-modal').on('click', function (e) {
+                                                e.preventDefault();
+                                                const foodId = $(this).data('food-id');
+                                                const date = $(this).data('date');
+
+                                                openAddFoodModal(foodId, date);
+                                            });
+                                        } else {
+                                            $('.search-results-section').remove();
+                                            $('#searchFoodForm').after('<div class="no-results">No results found.</div>');
+                                        }
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            });
+                        });
+
+                        function openAddFoodModal(foodId, date) {
+                            const addFoodModal = $('#addFoodModal');
+                            modal.find('#addFoodLoadingSpinner').show();
+                            $.ajax({
+                                url: "{% url 'meal:add' 0 %}".replace('0', foodId),
+                                type: "GET",
+                                data: {
+                                    'date': date
+                                },
+                                success: function (response) {
+                                    $('#searchFoodModal').modal('hide');
+                                    modal.find('#addFoodLoadingSpinner').hide();
+                                    addFoodModal.find('.modal-body').html(response);
+                                    addFoodModal.modal('show');
+
+                                    $('#addFoodForm').on('submit', function (event) {
+                                        event.preventDefault();
+                                        let formData = $(this).serializeArray();
+                                        formData.push({name: 'date', value: date});
+                                        $.ajax({
+                                            url: "{% url 'meal:add' 0 %}".replace('0', foodId),
+                                            type: "POST",
+                                            data: $.param(formData),
+
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    addFoodModal.modal('hide');
+                                                    location.reload();
+                                                } else {
+                                                    addFoodModal.find('.modal-body').html(response.html);
+                                                }
+                                            },
+                                            error: function (xhr, status, error) {
+                                                alert("An error occurred while submitting the form. Please try again.");
+                                            }
+                                        });
+                                    })
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <!-- Search Exercise Modal -->
+    <div class="modal fade" id="searchExerciseModal" tabindex="-1" aria-labelledby="searchExerciseModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchExerciseModalLabel">Search Exercise</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <div id="loadingSpinner" class="text-center">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Exercise Modal -->
+    <div class="modal fade" id="addExerciseModal" tabindex="-1" aria-labelledby="addExerciseModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExerciseModalLabel">Add Exercise Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="loadingSpinner" class="text-center">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Content will be loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#searchExerciseModal').on('show.bs.modal', function (event) {
+                const modal = $(this);
+                $.ajax({
+                    url: "{% url 'exercise:search' %}",
+                    type: "GET",
+                    data: {
+                        date: "{{ date | date:"Y-m-d" }}"
+                    },
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                        $('#searchExerciseForm').on('submit', function (event) {
+                            event.preventDefault();
+                            modal.find('#loadingSpinner').show();
+                            const query = $('input[name="query"]').val();
+                            const date = $('input[name="date"]').val();
+
+                            console.log(query)
+
+                            $.ajax({
+                                url: "{% url 'exercise:search' %}",
+                                type: "GET",
+                                data: {
+                                    query: query,
+                                    date: date
+                                },
+                                success: function (response) {
+                                    modal.find('#loadingSpinner').hide();
+                                    if (response.success) {
+
+                                        console.log(response.results);
+                                        const results = response.results;
+                                        const resultsContainer = $('<div class="search-results-section"></div>');
+                                        resultsContainer.empty();
+                                        if (results.length !== 0) {
+                                            results.forEach(function (item) {
+                                                const resultItem = `
+                                                <div class="search-result-item">
+                                                    <a href="#" class="open-add-modal" data-exercise-id="${item.id}" data-date="${date}">
+                                                        ${item.name}
+                                                    </a>
+                                                </div>
+                                            `;
+                                                resultsContainer.append(resultItem);
+                                            });
+                                            $('.search-results-section').remove();
+                                            $('#searchExerciseForm').after(resultsContainer);
+
+                                            $('.open-add-modal').on('click', function (e) {
+                                                e.preventDefault();
+                                                const exerciseId = $(this).data('exercise-id');
+                                                const date = $(this).data('date');
+
+                                                openAddExerciseModal(exerciseId, date);
+                                            });
+                                        } else {
+                                            $('.search-results-section').remove();
+                                            $('#searchExerciseForm').after(`
+                                            <div class="no-results">
+                                                No results found. <a href="#" id="addManualExercise">Add exercise manually</a>
+                                            </div>
+                                        `);
+                                            $('#addManualExercise').on('click', function (e) {
+                                                e.preventDefault();
+                                                openAddManualExerciseModal(null, date);
+                                            });
+                                        }
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            });
+                        });
+
+                        function openAddExerciseModal(exerciseId, date) {
+                            const addExerciseModal = $('#addExerciseModal');
+                            modal.find('#addExerciseLoadingSpinner').show();
+                            $.ajax({
+                                url: "{% url 'exercise:add' 0 %}".replace('0', exerciseId),
+                                type: "GET",
+                                data: {
+                                    'date': date
+                                },
+                                success: function (response) {
+                                    $('#searchExerciseModal').modal('hide');
+                                    modal.find('#addExerciseLoadingSpinner').hide();
+                                    addExerciseModal.find('.modal-body').html(response);
+                                    addExerciseModal.modal('show');
+
+                                    $('#addExerciseForm').on('submit', function (event) {
+                                        event.preventDefault();
+                                        let formData = $(this).serializeArray();
+                                        formData.push({name: 'date', value: date});
+                                        $.ajax({
+                                            url: "{% url 'exercise:add' 0 %}".replace('0', exerciseId),
+                                            type: "POST",
+                                            data: $.param(formData),
+
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    addExerciseModal.modal('hide');
+                                                    location.reload();
+                                                } else {
+                                                    addExerciseModal.find('.modal-body').html(response.html);
+                                                }
+                                            },
+                                            error: function (xhr, status, error) {
+                                                alert("An error occurred while submitting the form. Please try again.");
+                                            }
+                                        });
+                                    })
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            })
+                        }
+
+                        function openAddManualExerciseModal(exerciseId, date) {
+                            const addExerciseModal = $('#addExerciseModal');
+                            modal.find('#addExerciseLoadingSpinner').show();
+                            $.ajax({
+                                url: "{% url 'exercise:add_manual' %}",
+                                type: "GET",
+                                data: {
+                                    'date': date
+                                },
+                                success: function (response) {
+                                    $('#searchExerciseModal').modal('hide');
+                                    modal.find('#addExerciseLoadingSpinner').hide();
+                                    addExerciseModal.find('.modal-body').html(response);
+                                    addExerciseModal.modal('show');
+
+                                    $('#addExerciseForm').on('submit', function (event) {
+                                        event.preventDefault();
+                                        let formData = $(this).serializeArray();
+                                        formData.push({name: 'date', value: date});
+                                        $.ajax({
+                                            url: "{% url 'exercise:add_manual'%}",
+                                            type: "POST",
+                                            data: $.param(formData),
+
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    addExerciseModal.modal('hide');
+                                                    location.reload();
+                                                } else {
+                                                    addExerciseModal.find('.modal-body').html(response.html);
+                                                }
+                                            },
+                                            error: function (xhr, status, error) {
+                                                alert("An error occurred while submitting the form. Please try again.");
+                                            }
+                                        });
+                                    })
+                                },
+                                error: function (xhr, status, error) {
+                                    alert("An error occurred. Please try again.");
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <div class="mynavbar">
         <div class="top">
             <div class="fitmate">Fitmate!</div>
             <div class="spacer"></div>
@@ -28,11 +433,8 @@
     </div>
     <div class="sections-item-dashboard">
         <div class="personal-info-date">
-
             <div class="personal-info">
-                <div class="profile-pic">
-                    <img src="woman-profile-cartoon.jpg" class="image-pfp" alt="">
-                </div>
+
                 <div class="name-w-h">
                     <div class="name">
                         <p> Hi, {{ profile.name }}. </p>
@@ -41,6 +443,13 @@
 
                     <div class="w-h-age">
                         <p class="wha-text">Age: {{ profile.age }}yrs</p>
+                        {% if profile.sex == 'male' %}
+                            <p class="wha-text">Sex: Male</p>
+                        {% elif profile.sex == 'female' %}
+                            <p class="wha-text">Sex: Female</p>
+                        {% else %}
+                            <p class="wha-text">Sex: Other</p>
+                        {% endif %}
                         <p class="wha-text">Weight: {{ profile.weight }}kg</p>
                         <p class="wha-text">Height: {{ profile.height }}cm</p>
 
@@ -65,15 +474,74 @@
                         {% else %}
                             <p class="wha-text">Activity Level: Very active</p>
                         {% endif %}
+                        {% if profile.goal in 'weight_loss, muscle_gain' %}
+                            <p class="wha-text">You have {{ profile.weeks_until_goal_reached }} weeks until you reach
+                                your
+                                goal weight of {{ profile.goal_weight }}kg.</p>
+                        {% endif %}
+
 
                     </div>
 
+                </div>
+                <div class="edit-profile-div">
+                    <button type="button" class="edit-profile-btn" data-toggle="modal" data-target="#editProfileModal">
+                        &#9881;
+                    </button>
+                    <script>
+                        $(document).ready(function () {
+                            $('#editProfileModal').on('show.bs.modal', function (event) {
+                                const modal = $(this);
+                                $.ajax({
+                                    url: "{% url 'core:edit_profile' %}",
+                                    type: "GET",
+                                    success: function (data) {
+                                        modal.find('.modal-body').html(data);
+                                    },
+                                    error: function () {
+                                        alert("An error occurred while loading the form.");
+                                    }
+                                });
+                            });
+
+                            $(document).on('submit', '#editProfileForm', function (event) {
+                                event.preventDefault();
+                                const form = $(this);
+
+                                $.ajax({
+                                    url: "{% url 'core:edit_profile' %}",
+                                    type: "POST",
+                                    data: form.serialize(),
+                                    success: function (response) {
+                                        if (response.success) {
+                                            $('#editProfileModal').modal('hide');
+                                            location.reload();
+                                        } else {
+                                            $('#editProfileModal .modal-body').html(response.html);
+                                        }
+                                    },
+                                    error: function () {
+                                        alert("An error occurred while submitting the form. Please try again.");
+                                    }
+                                });
+                            });
+                        });
+
+                    </script>
                 </div>
             </div>
 
             <div class="date-logs">
                 <div class="date-text">
-                    <span>Today, {{ date }}</span>
+                    {% if isToday %}
+                        <a href="?date={{ prev_date }}">&lt</a>
+                        <span>Today, {{ date }}</span>
+                        <a href="?date={{ next_date }}">&gt</a>
+                    {% else %}
+                        <a href="?date={{ prev_date }}">&lt</a>
+                        <span>{{ date }}</span>
+                        <a href="?date={{ next_date }}">&gt</a>
+                    {% endif %}
 
                 </div>
                 <div class="circle-progressions">
@@ -106,92 +574,134 @@
 
 
                 </div>
+                <div class="macro-columns">
+                    <div class="stat-names-column">
+                        <div class="stat-name">
+                            carb
+                        </div>
+                        <div class="stat-name">
+                            protein
+                        </div>
+                        <div class="stat-name">
+                            fat
+                        </div>
+                    </div>
+                    <div class="progress-bars-column">
+                        <div class="progress-container">
+                            <div class="progress-bar carb-bar" style="width: {{ carb_percentage }}%;"></div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar protein-bar"
+                                 style="width: {{ protein_percentage }}%;"></div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar fat-bar" style="width: {{ fat_percentage }}%;"></div>
+                        </div>
 
+                    </div>
+                    <div class="stat-percent-column">
+                                <span class="stat-name">
+                                    {{ carb_percentage }}%
+                                </span>
+                        <span class="stat-name">
+                                    {{ protein_percentage }}%
+                                </span>
+                        <span class="stat-name">
+                                    {{ fat_percentage }}%
+                                </span>
+                    </div>
+                </div>
 
             </div>
+
 
         </div>
 
         <div class="bottom-section">
             <div class="macro-add-section">
-                <div class="macro-info">
-
-                    <div class="macro-progress-bars">
-                        <span class="macro-goals-text">Macro goals</span>
-
-                        <div class="progress-row">
-                            <span class="stat-name">
-                                c
-                            </span>
-                            <div class="progress-container">
-
-                                <div class="progress-bar carb-bar" style="width: {{ carb_percentage }}%;"></div>
-                            </div>
-                            <span class="stat-name">
-                                {{ carb_percentage }}%
-                            </span>
-                        </div>
-
-                        <div class="progress-row">
-                            <span class="stat-name">
-                                p
-                            </span>
-                            <div class="progress-container">
-
-                                <div class="progress-bar protein-bar" style="width: {{ protein_percentage }}%;"></div>
-                            </div>
-                            <span class="stat-name">
-                                {{ protein_percentage }}%
-                            </span>
-                        </div>
-
-                        <div class="progress-row">
-                            <span class="stat-name">
-                                f
-                            </span>
-                            <div class="progress-container">
-
-                                <div class="progress-bar fat-bar" style="width: {{ fat_percentage }}%;"></div>
-                            </div>
-                            <span class="stat-name">
-                                {{ fat_percentage }}%
-                            </span>
-                        </div>
-
-
-                    </div>
-
-                </div>
                 <div class="add-log">
-                    <div class="add-exercise">
-                        <a href="{% url "exercise:add" %}" >Add Exercise</a>
-                    </div>
-                    <div class="add-meal">
-                        <a href="{% url "meal:search" %}" >Add Food</a>
-                    </div>
+
+                    <a href="#" class="add-exercise" data-toggle="modal" data-target="#searchFoodModal"
+                       data-date="{{ date | date:"Y-m-d" }}"> &#43; Add Exercise </a>
+
+
+                    <a href="#" class="add-meal" data-toggle="modal" data-target="#searchExerciseModal"
+                       data-date="{{ date }}"> &#43; Add Food </a>
+
                     <div class="log-weight">
                         <form method="POST" action=".">
                             {% csrf_token %}
-                            <div class="weight-log-box">
-                                <label for="{{ form.weight.id_for_label }}"></label>
-                                {{ form.weight }}
+                            <div class="weight-log-box-and-error">
+                                <div class="weight-log-box">
+                                    <label for="{{ log_weight_form.weight.id_for_label }}"></label>
+                                    {{ log_weight_form.weight }}
+                                </div>
+                                {% if log_weight_form.weight.errors %}
+                                    <div class="form-error form-error-small">
+                                        {{ log_weight_form.weight.errors }}
+                                    </div>
+                                {% endif %}
+
                             </div>
+
                             <div>
                                 <button class="weight-log-button" type="submit">Log Weight</button>
                             </div>
-
                         </form>
                     </div>
-
                 </div>
 
             </div>
-            <div class="other">
-                <span>Weight Changes</span>
 
+            {% if profile.goal in 'weight_loss, muscle_gain' %}
+                <div class="macro-progress-bars">
 
-            </div>
+                    {% if profile.goal == 'weight_loss' %}
 
+                        <p style="font-weight:500; font-size: small">
+                            Your weight loss goal is {{ profile.weekly_weight_gain_or_loss_goal }} kgs per week.
+                        </p>
+                        <div class="log-weight">
+                            <form method="POST" action=".">
+                                {% csrf_token %}
+                                <div class="loss-or-gain-div">
+                                    <div class="weight-log-box-and-button">
+                                        <div class="weight-log-box">
+                                            {{ weekly_gain_or_loss_form.weekly_weight_gain_or_loss_goal }}
+                                        </div>
+                                        <div>
+                                            <button class="weight-log-button" type="submit">Change goal</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+                    {% elif profile.goal == 'muscle_gain' %}
+                        <p style="font-weight:500; font-size: small">
+                            Your weight gain goal is {{ profile.weekly_weight_gain_or_loss_goal }} kgs per week.
+                        </p>
+                        <div class="log-weight">
+                            <form method="POST" action=".">
+                                {% csrf_token %}
+                                <div class="weight-log-box-and-button">
+                                    <div class="goal-log-box">
+                                        {{ weekly_gain_or_loss_form.weekly_weight_gain_or_loss_goal }}
+                                    </div>
+                                    <div>
+                                        <button class="goal-log-button" type="submit">Change goal</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+
+            {% endif %}
         </div>
     </div>
+
+
 {% endblock %}
